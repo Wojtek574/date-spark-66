@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RaportowanieRouteImport } from './routes/raportowanie'
+import { Route as InformacjeDocumentRouteImport } from './routes/informacje.$document'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RaportowanieRoute = RaportowanieRouteImport.update({
+  id: '/raportowanie',
+  path: '/raportowanie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InformacjeDocumentRoute = InformacjeDocumentRouteImport.update({
+  id: '/informacje/$document',
+  path: '/informacje/$document',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/raportowanie': typeof RaportowanieRoute
+  '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/raportowanie': typeof RaportowanieRoute
+  '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/raportowanie': typeof RaportowanieRoute
+  '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/raportowanie' | '/informacje/$document'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/raportowanie' | '/informacje/$document'
+  id: '__root__' | '/' | '/raportowanie' | '/informacje/$document'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RaportowanieRoute: typeof RaportowanieRoute
+  InformacjeDocumentRoute: typeof InformacjeDocumentRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/raportowanie': {
+      id: '/raportowanie'
+      path: '/raportowanie'
+      fullPath: '/raportowanie'
+      preLoaderRoute: typeof RaportowanieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/informacje/$document': {
+      id: '/informacje/$document'
+      path: '/informacje/$document'
+      fullPath: '/informacje/$document'
+      preLoaderRoute: typeof InformacjeDocumentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RaportowanieRoute: RaportowanieRoute,
+  InformacjeDocumentRoute: InformacjeDocumentRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
