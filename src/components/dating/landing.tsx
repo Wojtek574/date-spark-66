@@ -29,7 +29,7 @@ function HiddenProfile() {
 
 function Hero() {
   const variant = useVariant();
-  const headline = site.headlines[variant.experiment === 'headline' ? variant.index : 0];
+  const headline = site.headlines[variant.experiment === 'headline' ? variant.index : 0] ?? 'Nowe znajomości.\nTwój pierwszy krok.';
   const secondary = !(variant.experiment === 'secondary' && variant.index === 1);
   return <section className="hero" aria-labelledby="hero-title"><div className="hero-texture" aria-hidden="true" /><div className="container hero-grid"><div className="hero-copy"><div className="eyebrow"><span className="eyebrow-line" /> MNIEJ SCROLLOWANIA. WIĘCEJ CIEKAWOŚCI.</div><h1 id="hero-title">{headline.split('\n')[0]}<br /><span>{headline.split('\n')[1]}</span></h1><p className="hero-subtitle">Czasem wszystko zaczyna się od zwykłego „cześć”.<br className="desktop-break" /> Odkryj możliwości poznania nowych osób —<br className="desktop-break" /> w swoim tempie, na swoich zasadach.</p><div className="hero-actions"><CTA source="hero" />{secondary && <CTA source="hero-secondary" label="Zobacz, co dalej" secondary />}</div><div className="hero-assurance"><span><ShieldCheck />Świadomy wybór</span><span><LockKeyhole />Bez rejestracji tutaj</span></div></div><div className="hero-profile"><div className="profile-note"><Sparkles /><span>Każda znajomość ma swój początek</span></div><HiddenProfile /><div className="floating-note"><Heart /><span>Nie wszystko trzeba wiedzieć od razu.</span></div></div></div><div className="container hero-bottom"><span>NOWE ROZMOWY. NOWE PERSPEKTYWY.</span><a href="#mozliwosci" aria-label="Przewiń do możliwości"><ArrowDown /></a><span>TY DECYDUJESZ, CO DALEJ.</span></div></section>;
 }
