@@ -1,4 +1,5 @@
 # Plan realizacji
+- [ ] Ulepszenia konwersji: widoczne CTA po przewinięciu i po wyborze wieku; usunięcie słowa „partner” z publicznych tekstów bez ukrywania afiliacji.
 - [x] Przebudowa na jeden centralny ukryty profil w kolorystyce blink-match.com i kontrola układu.
 - [x] Autorska strona 18+ z ukrytym podglądem bez grafik kobiet i treści demonstracyjnych.
 - [x] Wspólne CTA, wybór wieku, mobilny pasek i konfiguracja afiliacji.
