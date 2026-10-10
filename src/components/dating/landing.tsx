@@ -6,8 +6,6 @@ import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
 import { site } from '@/config/site';
 import { track } from '@/lib/landing-analytics';
 
-
-
 function HiddenProfile() {
   const variant = useVariant();
   const [age, setAge] = useState('');
