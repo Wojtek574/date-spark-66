@@ -9,7 +9,7 @@ describe('Privacy-safe affiliate landing', () => {
     expect(affiliateIsConfigured('http://partner.example')).toBe(false);
     expect(affiliateIsConfigured('https://user:password@partner.example')).toBe(false);
     expect(affiliateIsConfigured('https://partner.example/signup')).toBe(true);
-    expect(outbound('test')).toBe(false);
+    expect(outbound('test', '')).toBe(false);
   });
   it('keeps the same variant for this visit', () => { expect(assignVariant()).toBe(assignVariant()); });
   it('does not emit analytics without consent; never includes arbitrary campaign data', () => {
