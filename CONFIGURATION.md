@@ -2,13 +2,13 @@
 
 ## Działa bez usług zewnętrznych
 - Landing 18+, ukryty abstrakcyjny podgląd bez zdjęć kobiet, fikcyjnych profili i wiadomości.
-- Wspólne CTA z komunikatem brakującego linku, FAQ, opcjonalny wybór wieku, zamykany pasek mobilny.
+- Wspólne CTA prowadzące do linku partnera, opcjonalny wybór wieku, zamykany pasek mobilny.
 - Zgoda na pomiar i zdarzenia przeglądarkowe; bez skryptu GA4, cookies, localStorage ani danych profilowych.
 - Pojedynczy test A/B przypisany w pamięci bieżącej wizyty, domyślnie wyłączony.
 - Osobne strony informacji i raportowania; raport nie przedstawia żadnych wymyślonych wyników.
 
 ## Wymaga właściciela
-1. W `src/config/site.ts` ustaw `AFFILIATE_URL` na faktyczny adres HTTPS partnera. Bez niego kliknięcia nie przekierowują.
+1. `AFFILIATE_URL` jest ustawiony na `https://safeoffers.pro/a/82jyTYKjVcRmEy`. Potwierdź u partnera, że adres jest aktualny i że przejście jest poprawnie rozliczane.
 2. Ustaw `CANONICAL_URL` na docelowy adres domeny. Obecnie tag canonical jest pominięty.
 3. Dostarcz prawdziwe dokumenty prywatności/cookies, kontakt oraz ewentualny regulamin. Ustaw adresy dokumentów w `site.documents`. Nie publikuj brakujących dokumentów jako polityk prawnych.
 4. Potwierdź u partnera funkcje, ceny i zasady; obecna treść nie obiecuje bezpłatności, dopasowania ani odpowiedzi.

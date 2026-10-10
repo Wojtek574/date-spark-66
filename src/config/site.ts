@@ -1,4 +1,4 @@
-export const AFFILIATE_URL = ''; // WYMAGANE: pełny adres HTTPS partnera.
+export const AFFILIATE_URL = 'https://safeoffers.pro/a/82jyTYKjVcRmEy'; // Link partnera.
 export const CANONICAL_URL = ''; // WYMAGANE: docelowa domena HTTPS.
 export const site = {
   name: 'między nami',

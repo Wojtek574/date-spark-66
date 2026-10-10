@@ -1,6 +1,6 @@
 import { ACTIVE_EXPERIMENT, AFFILIATE_URL } from '@/config/site';
 
-export type EventName = 'page_view' | 'hero_cta_click' | 'profile_cta_click' | 'age_group_selected' | 'faq_open' | 'scroll_50' | 'scroll_90' | 'affiliate_outbound_click';
+export type EventName = 'page_view' | 'hero_cta_click' | 'profile_cta_click' | 'age_group_selected' | 'scroll_50' | 'scroll_90' | 'affiliate_outbound_click';
 export type Variant = { experiment: string; index: number; id: string };
 let consent = false;
 let variant: Variant = { experiment: 'none', index: 0, id: 'control' };
@@ -34,9 +34,9 @@ export function track(name: EventName, detail: Record<string, string | number> =
 export function affiliateIsConfigured(url = AFFILIATE_URL) {
   try { const parsed = new URL(url); return parsed.protocol === 'https:' && !parsed.username && !parsed.password; } catch { return false; }
 }
-export function outbound(source: string) {
-  if (!affiliateIsConfigured()) return false;
+export function outbound(source: string, url = AFFILIATE_URL) {
+  if (!affiliateIsConfigured(url)) return false;
   track('affiliate_outbound_click', { placement: source });
-  window.location.assign(AFFILIATE_URL);
+  window.location.assign(url);
   return true;
 }
