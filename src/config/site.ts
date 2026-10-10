@@ -2,8 +2,8 @@ export const AFFILIATE_URL = ''; // WYMAGANE: pełny adres HTTPS partnera.
 export const CANONICAL_URL = ''; // WYMAGANE: docelowa domena HTTPS.
 export const site = {
   name: 'między nami',
-  headlines: ['Nowe znajomości.\nTwój pierwszy krok.', 'Poznaj kogoś.\nZacznij od ciekawości.', 'Dobre rozmowy\nmają swój początek.'],
-  ctaLabels: ['Sprawdź możliwości', 'Przejdź do rejestracji'],
+  headlines: ['Profil ukryty', 'Poznaj profil', 'Odkryj więcej'],
+  ctaLabels: ['Przejdź do rejestracji', 'Sprawdź dostępne profile'],
   documents: {
     prywatnosc: { title: 'Polityka prywatności', url: '' },
     cookies: { title: 'Informacje o cookies', url: '' },

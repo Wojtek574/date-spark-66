@@ -1,4 +1,5 @@
 # Plan realizacji
+- [x] Przebudowa na jeden centralny ukryty profil w kolorystyce blink-match.com i kontrola układu.
 - [x] Autorska strona 18+ z ukrytym podglądem bez grafik kobiet i treści demonstracyjnych, korzyściami i FAQ.
 - [x] Wspólne CTA, wybór wieku, mobilny pasek i konfiguracja afiliacji.
 - [x] Warstwa analityczna za zgodą, warianty A/B i struktura raportowania bez danych.
