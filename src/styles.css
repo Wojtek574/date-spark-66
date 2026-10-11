@@ -62,7 +62,7 @@
 }
 
 .container { width: min(1000px, calc(100% - 48px)); margin-inline: auto; }
-.site-header { border-bottom: 1px solid var(--border); background: var(--deep); }
+.site-header { position: sticky; top: 0; z-index: 35; border-bottom: 1px solid var(--border); background: var(--deep); }
 .header-inner { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
 .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 23px; font-weight: 800; white-space: nowrap; line-height: 1; }
 .brand > svg { color: var(--coral); width: 24px; height: 24px; }
@@ -108,6 +108,7 @@
 .age-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .age-option { background: var(--secondary); font-size: 12px; min-height: 40px; padding: 7px; border-radius: 5px; }
 .age-option.selected { background: var(--accent); border-color: var(--primary); }
+.profile-age > .main-cta { width: 100%; margin-top: 15px; }
 .profile-age p.age-feedback { font-size: 9px; margin: 12px 0 0; min-height: 16px; }
 .profile-alternative .profile-cover { height: 100px; }
 footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }

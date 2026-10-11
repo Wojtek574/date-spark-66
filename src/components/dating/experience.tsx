@@ -33,7 +33,7 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
     {children}
     {sticky && !dismissed && consent !== 'pending' && <div className="mobile-sticky"><CTA source="sticky" /><Button variant="ghost" size="icon" aria-label="Zamknij pasek rejestracji" onClick={() => setDismissed(true)}><X /></Button></div>}
     {consent === 'pending' ? <aside className="consent-strip" aria-label="Zgoda na pomiar"><div><ShieldCheck /><p><strong>Twój wybór ma znaczenie.</strong> Opcjonalny pomiar kliknięć włączymy tylko za Twoją zgodą. Bez danych osobowych.</p></div><div className="consent-actions"><Button variant="ghost" onClick={() => chooseConsent(false)}>Tylko niezbędne</Button><Button variant="outline" onClick={() => chooseConsent(true)}>Zgadzam się na pomiar</Button></div></aside> : <div className="consent-settings"><Button variant="link" onClick={() => { setAnalyticsConsent(false); setConsent('pending'); }}>Ustawienia prywatności</Button></div>}
-    <Dialog open={missing} onOpenChange={setMissing}><DialogContent><LockKeyhole className="text-primary" /><DialogTitle>Link rejestracji nie jest jeszcze ustawiony</DialogTitle><DialogDescription>Przejście do partnera będzie dostępne po skonfigurowaniu linku afiliacyjnego. Teraz nie przekierowujemy Cię na żadną zewnętrzną stronę.</DialogDescription><Button onClick={() => setMissing(false)}>Rozumiem</Button></DialogContent></Dialog>
+    <Dialog open={missing} onOpenChange={setMissing}><DialogContent><LockKeyhole className="text-primary" /><DialogTitle>{site.copy.unavailableTitle}</DialogTitle><DialogDescription>{site.copy.unavailableDescription}</DialogDescription><Button onClick={() => setMissing(false)}>Rozumiem</Button></DialogContent></Dialog>
   </Experience.Provider>;
 }
 export function useVariant() { return useContext(Experience).variant; }
@@ -48,5 +48,5 @@ export function CTA({ source, label, secondary = false }: { source: string; labe
     setLoading(true);
     if (!outbound(source)) { setLoading(false); openMissing(); }
   }
-  return <Button variant={secondary ? 'ghost' : 'romantic'} size="lg" className={secondary ? 'secondary-cta' : 'main-cta'} onClick={click} disabled={loading} aria-busy={loading}>{loading ? <LoaderCircle className="animate-spin" /> : <>{text}<ArrowUpRight aria-hidden="true" /></>}</Button>;
+  return <Button variant={secondary ? 'ghost' : 'romantic'} size="lg" className={secondary ? 'secondary-cta' : 'main-cta'} onClick={click} disabled={loading} aria-busy={loading}>{loading ? <><LoaderCircle className="animate-spin" />{site.copy.loading}</> : <>{text}<ArrowUpRight aria-hidden="true" /></>}</Button>;
 }
