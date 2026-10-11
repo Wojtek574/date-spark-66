@@ -1,6 +1,6 @@
 import { ACTIVE_EXPERIMENT, AFFILIATE_URL } from '@/config/site';
 
-export type EventName = 'page_view' | 'hero_cta_click' | 'profile_cta_click' | 'age_group_selected' | 'scroll_50' | 'scroll_90' | 'affiliate_outbound_click';
+export type EventName = 'page_view' | 'cta_view' | 'cta_click' | 'hero_cta_click' | 'profile_cta_click' | 'age_group_selected' | 'scroll_50' | 'scroll_90' | 'affiliate_outbound_click';
 export type Variant = { experiment: string; index: number; id: string };
 let consent = false;
 let variant: Variant = { experiment: 'none', index: 0, id: 'control' };
