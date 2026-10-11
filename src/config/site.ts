@@ -10,8 +10,6 @@ export const site = {
     loading: 'Przechodzimy…',
     unavailableTitle: 'Przejście jest teraz niedostępne',
     unavailableDescription: 'Nie możemy otworzyć strony rejestracji. Spróbuj ponownie później. Nie przekierowujemy Cię na inny adres.',
-    affiliation: 'Strona promocyjna z linkami afiliacyjnymi. Możemy otrzymać wynagrodzenie za kliknięcie lub rejestrację w serwisie zewnętrznym. Nie jesteśmy operatorem serwisu randkowego. Wyłącznie 18+.',
-    affiliationDetails: 'Ta strona ma charakter promocyjny i zawiera linki afiliacyjne. Właściciel może otrzymać wynagrodzenie za kliknięcie lub rejestrację w serwisie zewnętrznym. Nie jest operatorem serwisu randkowego. Warunki świadczenia usług ustala operator tego serwisu.',
   },
   headlines: ['Profil ukryty', 'Poznaj profil', 'Odkryj więcej'],
   ctaLabels: ['Przejdź do rejestracji', 'Sprawdź dostępne profile'],
@@ -19,7 +17,6 @@ export const site = {
     prywatnosc: { title: 'Polityka prywatności', url: '' },
     cookies: { title: 'Informacje o cookies', url: '' },
     regulamin: { title: 'Regulamin', url: '' },
-    afiliacja: { title: 'Informacja afiliacyjna', url: '' },
     kontakt: { title: 'Kontakt', url: '' },
   },
 };
