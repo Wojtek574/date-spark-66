@@ -1,7 +1,7 @@
 export const AFFILIATE_URL = 'https://safeoffers.pro/a/82jyTYKjVcRmEy'; // Link partnera.
 export const CANONICAL_URL = ''; // WYMAGANE: docelowa domena HTTPS.
 export const site = {
-  name: 'między nami',
+  name: 'blinkmatchlive',
   copy: {
     profileIntro: 'Przejdź do serwisu, aby sprawdzić dostępne profile i możliwości rozmowy.',
     destinationNote: 'Przejście do serwisu zewnętrznego · tylko 18+',
