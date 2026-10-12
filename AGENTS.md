@@ -18,3 +18,5 @@
 - Keep conversion improvements in the shared CTA and existing profile flow, with a sticky header, viewport-aware mobile CTA, inline consent and optional age-selection continuation; this keeps one destination and avoids additional registration steps.
 
 - Keep the existing browser analytics event name stable across rebranding so configured listeners remain compatible.
+
+- The shared CTA scrolls registration-labelled actions to the age section without outbound tracking; age continuation and other actions retain the validated outbound handler. This separates on-page navigation from external visits.

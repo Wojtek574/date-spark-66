@@ -1,19 +1,20 @@
 import { useState } from 'react';
-import { ArrowUpRight, Check, Heart, LockKeyhole, MapPin, ShieldCheck, UserRound } from 'lucide-react';
+import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
 import { site } from '@/config/site';
 import { track } from '@/lib/landing-analytics';
+import profileAsset from '@/assets/hidden-profile.png.asset.json';
 
 function HiddenProfile() {
   const variant = useVariant();
   const [age, setAge] = useState('');
   const headline = site.headlines[variant.experiment === 'headline' ? variant.index : 0] ?? 'Profil ukryty';
   return <article className={`single-profile ${variant.experiment === 'profile' && variant.index === 1 ? 'profile-alternative' : ''}`} aria-labelledby="profile-title">
-    <div className="profile-cover" aria-hidden="true"><div className="cover-pattern" /><span className="cover-heart"><Heart strokeWidth={1} /></span></div>
+    <div className="profile-cover" aria-hidden="true"><img className="profile-cover-photo" src={profileAsset.url} alt="" /></div>
     <div className="profile-inner">
-      <div className="locked-avatar" aria-label="Zdjęcie profilu ukryte"><UserRound className="blurred-avatar" strokeWidth={1} /><LockKeyhole className="avatar-lock" strokeWidth={1.7} /><span className="avatar-lock-badge"><LockKeyhole /></span></div>
+      <div className="locked-avatar"><img className="profile-avatar-photo" src={profileAsset.url} alt="Rozmyte zdjęcie ukrytego profilu" /></div>
       <span className="profile-status"><LockKeyhole size={12} /> PRYWATNY PODGLĄD</span>
       <h1 id="profile-title">{headline}</h1>
       <div className="hidden-location"><MapPin size={16} /><span aria-label="Lokalizacja ukryta" /></div>
@@ -22,7 +23,7 @@ function HiddenProfile() {
       <CTA source="hero" />
       {!(variant.experiment === 'secondary' && variant.index === 1) && <CTA source="profile-secondary" label="Sprawdź możliwości rozmowy" secondary />}
       <div className="profile-assurance"><ShieldCheck size={14} /> {site.copy.destinationNote}</div>
-      <div className="profile-age"><h2>Wybierz swoją grupę wiekową</h2><p>Opcjonalnie — możesz też od razu przejść dalej.</p><div className="age-options" role="group" aria-label="Opcjonalny przedział wiekowy">{['18–29', '30–44', '45+'].map(group => <Button key={group} variant="outline" aria-pressed={age === group} className={age === group ? 'age-option selected' : 'age-option'} onClick={() => { setAge(group); track('age_group_selected', { age_group: group }); }}><span>{group} lat</span>{age === group && <Check size={13} />}</Button>)}</div><p className="age-feedback" aria-live="polite">{age ? `Wybrano ${age} lat. ${site.copy.ageSelected}` : 'Wybór pozostaje tylko na czas tej wizyty.'}</p>{age && <CTA source="profile-age" label={site.copy.ageCta} />}</div>
+      <div id="age-selection" className="profile-age" tabIndex={-1} aria-labelledby="age-title"><h2 id="age-title">Wybierz swoją grupę wiekową</h2><p>Opcjonalnie — możesz też od razu przejść dalej.</p><div className="age-options" role="group" aria-label="Opcjonalny przedział wiekowy">{['18–29', '30–44', '45+'].map(group => <Button key={group} variant="outline" aria-pressed={age === group} className={age === group ? 'age-option selected' : 'age-option'} onClick={() => { setAge(group); track('age_group_selected', { age_group: group }); }}><span>{group} lat</span>{age === group && <Check size={13} />}</Button>)}</div><p className="age-feedback" aria-live="polite">{age ? `Wybrano ${age} lat. ${site.copy.ageSelected}` : 'Wybór pozostaje tylko na czas tej wizyty.'}</p>{age && <CTA source="profile-age" label={site.copy.ageCta} />}</div>
     </div>
   </article>;
 }

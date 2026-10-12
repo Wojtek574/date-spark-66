@@ -81,7 +81,8 @@
 .profile-page-label > span:last-child { display: flex; align-items: center; gap: 5px; }
 .single-profile { background: var(--card); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; box-shadow: var(--profile-shadow); }
 .profile-cover { height: 138px; background: var(--cover); position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
-.cover-pattern { position: absolute; inset: 0; background: repeating-linear-gradient(120deg, transparent 0 44px, var(--cover-accent) 45px, transparent 46px 90px); }
+.profile-cover-photo { width: 100%; height: 100%; object-fit: cover; object-position: center 35%; }
+.profile-avatar-photo { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; border-radius: inherit; }
 .cover-heart { position: absolute; right: 22px; top: 22px; color: var(--primary-foreground); opacity: .55; transform: rotate(12deg); }
 .cover-heart svg { width: 63px; height: 63px; }
 .profile-inner { padding: 0 38px 25px; text-align: center; }
@@ -103,7 +104,7 @@
 .profile-inner > .main-cta { width: 100%; justify-content: center; }
 .profile-inner > .secondary-cta { margin-top: 4px; }
 .profile-assurance { display: flex; justify-content: center; align-items: center; gap: 6px; color: var(--muted-foreground); font-size: 9px; margin: 8px 0 23px; }
-.profile-age { border-top: 1px solid var(--border); padding-top: 22px; }
+.profile-age { scroll-margin-top: 90px; border-top: 1px solid var(--border); padding-top: 22px; }
 .profile-age h2 { font-size: 14px; margin: 0 0 5px; font-weight: 600; }
 .profile-age > p { font-size: 10px; color: var(--muted-foreground); margin-bottom: 15px; }
 .age-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
