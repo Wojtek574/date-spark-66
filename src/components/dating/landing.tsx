@@ -23,7 +23,19 @@ function HiddenProfile() {
       <CTA source="hero" />
       {!(variant.experiment === 'secondary' && variant.index === 1) && <CTA source="profile-secondary" label="Sprawdź możliwości rozmowy" secondary />}
       <div className="profile-assurance"><ShieldCheck size={14} /> {site.copy.destinationNote}</div>
-      <div id="age-selection" className="profile-age" tabIndex={-1} aria-labelledby="age-title"><h2 id="age-title">Wybierz swoją grupę wiekową</h2><p>Opcjonalnie — możesz też od razu przejść dalej.</p><div className="age-options" role="group" aria-label="Opcjonalny przedział wiekowy">{['18–29', '30–44', '45+'].map(group => <Button key={group} variant="outline" aria-pressed={age === group} className={age === group ? 'age-option selected' : 'age-option'} onClick={() => { setAge(group); track('age_group_selected', { age_group: group }); }}><span>{group} lat</span>{age === group && <Check size={13} />}</Button>)}</div><p className="age-feedback" aria-live="polite">{age ? `Wybrano ${age} lat. ${site.copy.ageSelected}` : 'Wybór pozostaje tylko na czas tej wizyty.'}</p>{age && <CTA source="profile-age" label={site.copy.ageCta} />}</div>
+      <section id="age-selection" className="profile-age" tabIndex={-1} aria-labelledby="age-title">
+        <h2 id="age-title">{site.copy.ageTitle}</h2>
+        <p className="age-intro">{site.copy.ageIntro}</p>
+        <div className="age-options" role="group" aria-label="Opcjonalny przedział wiekowy">
+          {['18–29', '30–44', '45+'].map(group => <Button key={group} variant="outline" aria-label={`${group} lat`} aria-pressed={age === group} className={age === group ? 'age-option selected' : 'age-option'} onClick={() => { setAge(group); track('age_group_selected', { age_group: group }); }}>
+            <Check className="age-check" size={16} aria-hidden="true" />
+            <span className="age-number">{group}</span><span className="age-unit">lat</span>
+          </Button>)}
+        </div>
+        <p className="age-feedback" aria-live="polite">{age ? <><Check size={14} aria-hidden="true" /> Wybrano {age} lat. {site.copy.ageSelected}</> : site.copy.ageOptional}</p>
+        <CTA source="profile-age" label={site.copy.ageCta} />
+        {!age && <CTA source="profile-age-skip" label={site.copy.ageSkip} secondary />}
+      </section>
     </div>
   </article>;
 }

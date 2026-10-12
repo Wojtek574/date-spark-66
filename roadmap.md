@@ -1,4 +1,5 @@
 # Plan realizacji
+- [x] Wyeksponowanie wyboru wieku: wyróżnione tło, większe przyciski, czytelny wybór i dostępne przejście bez wybierania wieku.
 - [x] Marka blink-match bez kropki, przesłane zdjęcie w awatarze i tle, przewijanie przycisku rejestracji do wieku, usunięcie informacji o niezmienności oferty.
 - [x] Zmiana marki na blinkmatchlive i usprawnienie konwersji: kontekstowy pasek, niezasłaniająca zgoda, pomiar widoczności CTA i powrót z rejestracji.
 - [x] Ulepszenia konwersji: widoczne CTA po przewinięciu i po wyborze wieku; usunięcie słowa „partner” z publicznych tekstów bez ukrywania afiliacji.
