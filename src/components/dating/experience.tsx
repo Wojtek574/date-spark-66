@@ -1,12 +1,12 @@
 import { useEffect, useState, createContext, useContext, type ReactNode } from 'react';
-import { ArrowUpRight, Heart, LoaderCircle, LockKeyhole, ShieldCheck, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, ShieldCheck, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { site } from '@/config/site';
 import { assignVariant, outbound, setAnalyticsConsent, track, type Variant } from '@/lib/landing-analytics';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
-export function Brand() { return <a href="/" className="brand" aria-label={`${site.name} — strona główna`}><Heart aria-hidden="true" /><span>{site.name}<span className="brand-dot">.</span></span></a>; }
+export function Brand() { return <a href="/" className="brand" aria-label={`${site.name} — strona główna`}><Heart aria-hidden="true" /><span>{site.name}</span></a>; }
 export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [variant, setVariant] = useState<Variant>({ experiment: 'none', index: 0, id: 'control' });
   const [missing, setMissing] = useState(false);
@@ -71,8 +71,16 @@ export function CTA({ source, label, secondary = false }: { source: string; labe
     track('cta_click', { placement: source });
     if (source === 'hero') track('hero_cta_click', { placement: source });
     if (source.startsWith('profile')) track('profile_cta_click', { placement: source });
+    if (text === 'Przejdź do rejestracji') {
+      const ageSection = document.getElementById('age-selection');
+      if (ageSection) {
+        ageSection.focus({ preventScroll: true });
+        ageSection.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+      }
+      return;
+    }
     setLoading(true);
     if (!outbound(source)) { setLoading(false); openMissing(); }
   }
-  return <Button data-cta-source={source} variant={secondary ? 'ghost' : 'romantic'} size="lg" className={secondary ? 'secondary-cta' : 'main-cta'} onClick={click} disabled={loading} aria-busy={loading}>{loading ? <><LoaderCircle className="animate-spin" />{site.copy.loading}</> : <>{text}<ArrowUpRight aria-hidden="true" /></>}</Button>;
+  return <Button data-cta-source={source} variant={secondary ? 'ghost' : 'romantic'} size="lg" className={secondary ? 'secondary-cta' : 'main-cta'} onClick={click} disabled={loading} aria-busy={loading}>{loading ? <><LoaderCircle className="animate-spin" />{site.copy.loading}</> : <>{text}{text === 'Przejdź do rejestracji' ? <ArrowDown aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}</>}</Button>;
 }
