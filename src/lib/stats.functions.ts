@@ -6,7 +6,7 @@ export type Group = { key: string; visits: number; clicks: number; outbound: num
 export const getStats = createServerFn({ method: 'POST' })
   .inputValidator((d: { password: string; days: number }) => ({ password: String(d.password ?? '').slice(0, 200), days: Math.min(365, Math.max(1, Number(d.days) || 30)) }))
   .handler(async ({ data }) => {
-    const expected = process.env.STATS_PASSWORD;
+    const expected = process.env['STATS_PASSWORD'];
     if (!expected) return { ok: false as const, error: 'Hasło do statystyk nie zostało jeszcze ustawione.' };
     if (data.password !== expected) return { ok: false as const, error: 'Nieprawidłowe hasło.' };
     const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
