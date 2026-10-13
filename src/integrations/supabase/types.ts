@@ -14,7 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      page_events: {
+        Row: {
+          created_at: string
+          device: string
+          event: string
+          id: number
+          placement: string | null
+          source: string
+          variant_id: string
+          visit_id: string
+        }
+        Insert: {
+          created_at?: string
+          device?: string
+          event: string
+          id?: number
+          placement?: string | null
+          source?: string
+          variant_id?: string
+          visit_id: string
+        }
+        Update: {
+          created_at?: string
+          device?: string
+          event?: string
+          id?: number
+          placement?: string | null
+          source?: string
+          variant_id?: string
+          visit_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
