@@ -33,7 +33,7 @@ export function track(name: EventName, detail: Record<string, string | number> =
   if (STORED.has(name)) {
     const ref = document.referrer ? (() => { try { return new URL(document.referrer).hostname; } catch { return ''; } })() : '';
     const src = payload.source !== 'unknown' ? payload.source : (ref && ref !== window.location.hostname ? ref.slice(0, 64) : 'direct');
-    const placement = typeof detail.placement === 'string' ? detail.placement.slice(0, 40) : typeof detail.age_group === 'string' ? detail.age_group.slice(0, 40) : null;
+    const placement = typeof detail['placement'] === 'string' ? detail['placement'].slice(0, 40) : typeof detail['age_group'] === 'string' ? detail['age_group'].slice(0, 40) : null;
     void supabase.from('page_events').insert({ visit_id: visitId, event: name, variant_id: variant.id, device: payload.device, source: src, placement }).then(() => {}, () => {});
   }
   // Adapter: słuchaj tego zdarzenia i przekaż wyłącznie te pola do GA4/innego narzędzia.
