@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RaportowanieRouteImport } from './routes/raportowanie'
+import { Route as StatystykiRouteImport } from './routes/statystyki'
 import { Route as InformacjeDocumentRouteImport } from './routes/informacje.$document'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const RaportowanieRoute = RaportowanieRouteImport.update({
   path: '/raportowanie',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StatystykiRoute = StatystykiRouteImport.update({
+  id: '/statystyki',
+  path: '/statystyki',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InformacjeDocumentRoute = InformacjeDocumentRouteImport.update({
   id: '/informacje/$document',
   path: '/informacje/$document',
@@ -32,30 +38,35 @@ const InformacjeDocumentRoute = InformacjeDocumentRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/raportowanie': typeof RaportowanieRoute
+  '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/raportowanie': typeof RaportowanieRoute
+  '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/raportowanie': typeof RaportowanieRoute
+  '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/raportowanie' | '/informacje/$document'
+  fullPaths: '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/raportowanie' | '/informacje/$document'
-  id: '__root__' | '/' | '/raportowanie' | '/informacje/$document'
+  to: '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
+  id:
+    '__root__' | '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RaportowanieRoute: typeof RaportowanieRoute
+  StatystykiRoute: typeof StatystykiRoute
   InformacjeDocumentRoute: typeof InformacjeDocumentRoute
 }
 
@@ -75,6 +86,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RaportowanieRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/statystyki': {
+      id: '/statystyki'
+      path: '/statystyki'
+      fullPath: '/statystyki'
+      preLoaderRoute: typeof StatystykiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/informacje/$document': {
       id: '/informacje/$document'
       path: '/informacje/$document'
@@ -88,6 +106,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   RaportowanieRoute: RaportowanieRoute,
+  StatystykiRoute: StatystykiRoute,
   InformacjeDocumentRoute: InformacjeDocumentRoute,
 }
 export const routeTree = rootRouteImport

@@ -29,5 +29,5 @@ export const site = {
   },
 };
 export type Experiment = 'none' | 'headline' | 'cta' | 'profile' | 'order' | 'secondary';
-export const ACTIVE_EXPERIMENT: Experiment = 'none'; // Tylko jeden test naraz.
+export const ACTIVE_EXPERIMENT: Experiment = 'headline'; // Tylko jeden test naraz.
 export const ANALYTICS_CONFIG = { provider: '', measurementId: '' }; // Nie ładuje skryptów bez zgody.
