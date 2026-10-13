@@ -1,3 +1,7 @@
+import profileAsset from '@/assets/hidden-profile.png.asset.json';
+
+// Custom-domain hosts may not proxy Lovable's asset path; use the verified asset-serving origin.
+export const PROFILE_IMAGE_URL = new URL(profileAsset.url, 'https://date-spark-66.lovable.app').href;
 export const AFFILIATE_URL = 'https://safeoffers.pro/a/82jyTYKjVcRmEy'; // Link partnera.
 export const CANONICAL_URL = ''; // WYMAGANE: docelowa domena HTTPS.
 export const site = {

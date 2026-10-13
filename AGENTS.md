@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 ## Architecture
+- Resolve shared profile media from its asset pointer against the verified Lovable asset-serving origin, not the visitor's domain, because custom-domain hosts may not proxy asset paths.
 - Keep destination, public copy, legal links and the single active experiment in `src/config/site.ts` so campaigns can change without rewriting views.
 - Route every affiliate action through the shared CTA and outbound handler; missing or unsafe destinations must show a non-redirecting error.
 - Keep this landing frontend-only until a real integration is requested; analytics emits allowlisted browser events only after opt-in, never fabricated reports.
