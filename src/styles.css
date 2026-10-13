@@ -171,3 +171,12 @@ footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }
  .info-page h1 { font-size: 29px; } .report-grid { grid-template-columns: 1fr 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+.stats-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin: 20px 0; }
+.stats-form label { display: grid; gap: 6px; font-size: 13px; color: var(--muted-foreground); }
+.stats-form input, .stats-form select { min-height: 40px; border: 1px solid var(--border); border-radius: 6px; padding: 0 12px; background: var(--card); color: var(--foreground); min-width: 0; max-width: 100%; }
+.stats-error { color: var(--destructive); }
+.stats-block { margin-top: 28px; }
+.stats-table-wrap { overflow-x: auto; }
+.stats-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.stats-table th, .stats-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.stats-note { font-size: 13px; color: var(--muted-foreground); margin-top: 10px; }
