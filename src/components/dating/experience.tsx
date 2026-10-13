@@ -1,19 +1,18 @@
 import { useEffect, useState, createContext, useContext, type ReactNode } from 'react';
-import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, ShieldCheck, X } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { site } from '@/config/site';
-import { assignVariant, outbound, setAnalyticsConsent, track, type Variant } from '@/lib/landing-analytics';
+import { assignVariant, outbound, track, type Variant } from '@/lib/landing-analytics';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
 export function Brand() { return <a href="/" className="brand" aria-label={`${site.name} — strona główna`}><Heart aria-hidden="true" /><span>{site.name}</span></a>; }
 export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [variant, setVariant] = useState<Variant>({ experiment: 'none', index: 0, id: 'control' });
   const [missing, setMissing] = useState(false);
-  const [consent, setConsent] = useState<'pending' | 'yes' | 'no'>('pending');
   const [sticky, setSticky] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  useEffect(() => { setVariant(assignVariant()); }, []);
+  useEffect(() => { setVariant(assignVariant()); track('page_view'); }, []);
   useEffect(() => {
     const seen = new Set<string>();
     const onScroll = () => {
@@ -26,19 +25,17 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
       setSticky(Boolean(primary && primary.getBoundingClientRect().bottom < 76 && !visibleCTA && (!footer || footer.getBoundingClientRect().top > window.innerHeight)));
       const height = document.documentElement.scrollHeight - window.innerHeight;
       const percent = height > 0 ? window.scrollY / height : 0;
-      if (consent === 'yes') for (const [threshold, name] of [[.5, 'scroll_50'], [.9, 'scroll_90']] as const) {
+      for (const [threshold, name] of [[.5, 'scroll_50'], [.9, 'scroll_90']] as const) {
         if (percent >= threshold && !seen.has(name)) { seen.add(name); track(name); }
       }
     };
     const observer = new ResizeObserver(onScroll); observer.observe(document.body);
     window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll); onScroll();
     return () => { observer.disconnect(); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); };
-  }, [consent]);
-  const chooseConsent = (allow: boolean) => { setAnalyticsConsent(allow); setConsent(allow ? 'yes' : 'no'); if (allow) track('page_view'); };
-  return <Experience.Provider value={{ variant, consent: consent === 'yes', openMissing: () => setMissing(true) }}>
+  }, []);
+  return <Experience.Provider value={{ variant, consent: true, openMissing: () => setMissing(true) }}>
     {children}
     {sticky && !dismissed && <div className="mobile-sticky"><CTA source="sticky" /><Button variant="ghost" size="icon" aria-label="Zamknij pasek rejestracji" onClick={() => setDismissed(true)}><X /></Button></div>}
-    {consent === 'pending' ? <aside className="consent-strip" aria-label="Zgoda na pomiar"><div><ShieldCheck /><p><strong>Twój wybór ma znaczenie.</strong> Opcjonalny pomiar kliknięć włączymy tylko za Twoją zgodą. Bez danych osobowych.</p></div><div className="consent-actions"><Button variant="ghost" onClick={() => chooseConsent(false)}>Tylko niezbędne</Button><Button variant="outline" onClick={() => chooseConsent(true)}>Zgadzam się na pomiar</Button></div></aside> : <div className="consent-settings"><Button variant="link" onClick={() => { setAnalyticsConsent(false); setConsent('pending'); }}>Ustawienia prywatności</Button></div>}
     <Dialog open={missing} onOpenChange={setMissing}><DialogContent><LockKeyhole className="text-primary" /><DialogTitle>{site.copy.unavailableTitle}</DialogTitle><DialogDescription>{site.copy.unavailableDescription}</DialogDescription><Button onClick={() => setMissing(false)}>Rozumiem</Button></DialogContent></Dialog>
   </Experience.Provider>;
 }
