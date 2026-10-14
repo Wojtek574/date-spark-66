@@ -8,7 +8,7 @@
 - Osobne strony informacji i raportowania; raport nie przedstawia żadnych wymyślonych wyników.
 
 ## Wymaga właściciela
-1. `AFFILIATE_URL` jest ustawiony na `https://safeoffers.pro/a/82jyTYKjVcRmEy`. Potwierdź u partnera, że adres jest aktualny i że przejście jest poprawnie rozliczane.
+1. `AFFILIATE_URL` jest ustawiony na `https://analise.click/a/0RWnF2gKoio9KZ`. Potwierdź u partnera, że adres jest aktualny i że przejście jest poprawnie rozliczane.
 2. Ustaw `CANONICAL_URL` na docelowy adres domeny. Obecnie tag canonical jest pominięty.
 3. Dostarcz prawdziwe dokumenty prywatności/cookies, kontakt oraz ewentualny regulamin. Ustaw adresy dokumentów w `site.documents`. Nie publikuj brakujących dokumentów jako polityk prawnych.
 4. Potwierdź u partnera funkcje, ceny i zasady; obecna treść nie obiecuje bezpłatności, dopasowania ani odpowiedzi.

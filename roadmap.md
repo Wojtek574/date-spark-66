@@ -12,4 +12,4 @@
 - [x] Kontrola przycisków, analityki oraz układu mobilnego i desktopowego.
 - [x] Przekierowanie afiliacyjne uruchomione — link partnera ustawiony; pozostaje potwierdzenie rozliczeń u partnera.
 - [ ] Publikacyjne dokumenty i canonical — potrzebne dokumenty, kontakt i docelowa domena od właściciela.
-- [ ] Zewnętrzne raporty — potrzebna konfiguracja narzędzia analitycznego i raportów rejestracji od partnera.
+- [ ] Zewnętrzne raporty — potrzebna konfiguracja narzędzia analitycznego i raportów rejestracji od partnera.- [x] Nowy link w przyciskach (analise.click)
