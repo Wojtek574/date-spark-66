@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, X } from 'lu
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { site } from '@/config/site';
-import { assignVariant, outbound, track, type Variant } from '@/lib/landing-analytics';
+import { assignVariant, outbound, track, startEngagement, type Variant } from '@/lib/landing-analytics';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
 export function Brand() { return <a href="/" className="brand" aria-label={`${site.name} — strona główna`}><Heart aria-hidden="true" /><span>{site.name}</span></a>; }
@@ -12,7 +12,7 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [missing, setMissing] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  useEffect(() => { setVariant(assignVariant()); track('page_view'); }, []);
+  useEffect(() => { setVariant(assignVariant()); track('page_view'); return startEngagement(); }, []);
   useEffect(() => {
     const seen = new Set<string>();
     const onScroll = () => {
