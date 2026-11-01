@@ -38,11 +38,11 @@ export function track(name: EventName, detail: Record<string, string | number> =
   if (!visitId) visitId = crypto.randomUUID();
   const params = new URLSearchParams(window.location.search);
   const payload = {
+    ...detail,
     event: name, variant_id: variant.id, experiment: variant.experiment,
     device: window.matchMedia('(max-width: 767px)').matches ? 'mobile' : 'desktop',
     source: safeCampaign(params.get('utm_source')) ?? 'unknown',
     utm_medium: safeCampaign(params.get('utm_medium')), utm_campaign: safeCampaign(params.get('utm_campaign')),
-    ...detail,
   };
   if (STORED.has(name)) {
     const ref = document.referrer ? (() => { try { return new URL(document.referrer).hostname; } catch { return ''; } })() : '';
@@ -73,6 +73,6 @@ export function affiliateIsConfigured(url = AFFILIATE_URL) {
 export function outbound(source: string, url = AFFILIATE_URL) {
   if (!affiliateIsConfigured(url)) return false;
   track('affiliate_outbound_click', { placement: source });
-  setTimeout(() => window.location.assign(url), 150);
+  void Promise.race([queue,new Promise(resolve=>setTimeout(resolve,1000))]).then(()=>window.location.assign(url));
   return true;
 }
