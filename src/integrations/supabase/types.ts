@@ -47,6 +47,57 @@ export type Database = {
         }
         Relationships: []
       }
+      quality_page_events: {
+        Row: {
+          active_ms: number
+          browser: string
+          campaign: string | null
+          created_at: string
+          device: string
+          event: string
+          id: string
+          medium: string | null
+          os: string
+          placement: string | null
+          quality: string
+          source: string
+          variant_id: string
+          visit_id: string
+        }
+        Insert: {
+          active_ms?: number
+          browser: string
+          campaign?: string | null
+          created_at?: string
+          device: string
+          event: string
+          id: string
+          medium?: string | null
+          os: string
+          placement?: string | null
+          quality: string
+          source: string
+          variant_id: string
+          visit_id: string
+        }
+        Update: {
+          active_ms?: number
+          browser?: string
+          campaign?: string | null
+          created_at?: string
+          device?: string
+          event?: string
+          id?: string
+          medium?: string | null
+          os?: string
+          placement?: string | null
+          quality?: string
+          source?: string
+          variant_id?: string
+          visit_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
