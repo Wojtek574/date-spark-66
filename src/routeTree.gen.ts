@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as RaportowanieRouteImport } from './routes/raportowanie'
 import { Route as StatystykiRouteImport } from './routes/statystyki'
 import { Route as InformacjeDocumentRouteImport } from './routes/informacje.$document'
+import { Route as ApiPublicEventsRouteImport } from './routes/api/public/events'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const InformacjeDocumentRoute = InformacjeDocumentRouteImport.update({
   path: '/informacje/$document',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicEventsRoute = ApiPublicEventsRouteImport.update({
+  id: '/api/public/events',
+  path: '/api/public/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
+  '/api/public/events': typeof ApiPublicEventsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
+  '/api/public/events': typeof ApiPublicEventsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,14 +61,30 @@ export interface FileRoutesById {
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
+  '/api/public/events': typeof ApiPublicEventsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
+  fullPaths:
+    | '/'
+    | '/raportowanie'
+    | '/statystyki'
+    | '/informacje/$document'
+    | '/api/public/events'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
+  to:
+    | '/'
+    | '/raportowanie'
+    | '/statystyki'
+    | '/informacje/$document'
+    | '/api/public/events'
   id:
-    '__root__' | '/' | '/raportowanie' | '/statystyki' | '/informacje/$document'
+    | '__root__'
+    | '/'
+    | '/raportowanie'
+    | '/statystyki'
+    | '/informacje/$document'
+    | '/api/public/events'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -68,6 +92,7 @@ export interface RootRouteChildren {
   RaportowanieRoute: typeof RaportowanieRoute
   StatystykiRoute: typeof StatystykiRoute
   InformacjeDocumentRoute: typeof InformacjeDocumentRoute
+  ApiPublicEventsRoute: typeof ApiPublicEventsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -100,6 +125,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InformacjeDocumentRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/events': {
+      id: '/api/public/events'
+      path: '/api/public/events'
+      fullPath: '/api/public/events'
+      preLoaderRoute: typeof ApiPublicEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -108,6 +140,7 @@ const rootRouteChildren: RootRouteChildren = {
   RaportowanieRoute: RaportowanieRoute,
   StatystykiRoute: StatystykiRoute,
   InformacjeDocumentRoute: InformacjeDocumentRoute,
+  ApiPublicEventsRoute: ApiPublicEventsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
