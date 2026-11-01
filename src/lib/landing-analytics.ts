@@ -33,6 +33,8 @@ function safeCampaign(value: string | null) {
 }
 export function track(name: EventName, detail: Record<string, string | number> = {}) {
   if (typeof window === 'undefined') return;
+  assignVariant();
+  if(STORED.has(name) && name!=='page_view' && !seen.has('page_view:')) track('page_view');
   if (!visitId) visitId = crypto.randomUUID();
   const params = new URLSearchParams(window.location.search);
   const payload = {

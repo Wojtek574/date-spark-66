@@ -1,0 +1,12 @@
+import { describe,it,expect } from 'vitest';
+import {aggregateStats,classifyTraffic,wilson,type StatsRow} from '@/lib/stats-model';
+const row=(visit_id:string,event:string,extra:Partial<StatsRow>={}):StatsRow=>({visit_id,event,variant_id:'headline-0',device:'mobile',source:'direct',placement:null,created_at:'2026-11-01T09:00:00Z',quality:'eligible',active_ms:0,browser:'Chrome',os:'Android',medium:null,campaign:null,...extra});
+describe('Reliable anonymous reports',()=>{
+ it('counts repeated page views once per visit, not as unique people',()=>{const s=aggregateStats([row('a','page_view'),row('a','page_view'),row('b','page_view')]);expect(s.totals.visits).toBe(2);});
+ it('excludes test and automated traffic from every conversion denominator',()=>{const s=aggregateStats([row('a','page_view'),row('b','page_view',{quality:'test'}),row('b','cta_click',{quality:'test'}),row('c','page_view',{quality:'automation'}),row('c','affiliate_outbound_click',{quality:'automation'})]);expect(s.totals).toMatchObject({visits:1,clicks:0,outbound:0});expect(s.quality).toMatchObject({test:1,automation:1});});
+ it('deduplicates clicks per placement and uses only last selected age',()=>{const s=aggregateStats([row('a','page_view'),row('a','cta_click',{placement:'hero'}),row('a','cta_click',{placement:'hero'}),row('a','age_group_selected',{placement:'18-29'}),row('a','age_group_selected',{placement:'45+'})]);expect(s.totals.clicks).toBe(1);expect(s.placements[0]?.clicks).toBe(1);expect(s.ages).toEqual({'45+':1});});
+ it('excludes orphan events rather than inventing visits',()=>{const s=aggregateStats([row('a','cta_click')]);expect(s.totals.visits).toBe(0);expect(s.quality.orphan).toBe(1);});
+ it('identifies engagement and takes maximum cumulative duration',()=>{const s=aggregateStats([row('a','page_view'),row('a','engagement',{active_ms:10000}),row('a','engagement',{active_ms:15000})]);expect(s.totals.engaged).toBe(1);expect(s.totals.medianSeconds).toBe(15);});
+ it('filters known crawlers and preview separately',()=>{expect(classifyTraffic('Googlebot','example.com',false)).toBe('automation');expect(classifyTraffic('Chrome','example.com',true)).toBe('automation');expect(classifyTraffic('Chrome','localhost',false)).toBe('test');expect(classifyTraffic('Chrome','example.com',false)).toBe('eligible');});
+ it('keeps nonzero uncertainty for zero observed conversions',()=>{const [low,high]=wilson(0,100);expect(low).toBe(0);expect(high).toBeGreaterThan(3);expect(high).toBeLessThan(4);});
+});
