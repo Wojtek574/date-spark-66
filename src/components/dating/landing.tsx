@@ -4,7 +4,16 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
 import { site, PROFILE_IMAGE_URL } from '@/config/site';
-import { track } from '@/lib/landing-analytics';
+import profil01 from '@/assets/suggested/profil-01.webp';
+import profil02 from '@/assets/suggested/profil-02.webp';
+import profil03 from '@/assets/suggested/profil-03.webp';
+import profil04 from '@/assets/suggested/profil-04.webp';
+import profil05 from '@/assets/suggested/profil-05.webp';
+import profil06 from '@/assets/suggested/profil-06.webp';
+import profil07 from '@/assets/suggested/profil-07.webp';
+import profil08 from '@/assets/suggested/profil-08.webp';
+import profil09 from '@/assets/suggested/profil-09.webp';
+import profil10 from '@/assets/suggested/profil-10.webp';
 
 function HiddenProfile() {
   const variant = useVariant();
