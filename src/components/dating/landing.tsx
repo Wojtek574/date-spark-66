@@ -38,15 +38,17 @@ function HiddenProfile() {
     </div>
   </article>;
 }
+const GRID_CROPS = ['center 15%', 'center 35%', 'center 55%', '25% 25%', '75% 25%', '25% 50%', '75% 50%', 'center 75%', '30% 65%', '70% 65%'];
+
 function SuggestedProfiles() {
   return <section className="suggested-section" aria-labelledby="suggested-title">
     <h2 id="suggested-title">Więcej profili czeka na Ciebie</h2>
     <p className="suggested-intro">Pełne profile i zdjęcia zobaczysz po rejestracji.</p>
     <div className="suggested-grid">
-      {Array.from({ length: 10 }, (_, i) => <article key={i} className="suggested-card">
-        <div className="suggested-avatar" aria-hidden="true">
-          <UserRound className="blurred-avatar" />
-          <span className="avatar-lock-badge"><LockKeyhole /></span>
+      {GRID_CROPS.map((crop, i) => <article key={i} className="suggested-card">
+        <div className="suggested-avatar">
+          <img className="suggested-avatar-photo" src={PROFILE_IMAGE_URL} alt="Rozmyte zdjęcie ukrytego profilu" style={{ objectPosition: crop }} loading="lazy" />
+          <span className="avatar-lock-badge" aria-hidden="true"><LockKeyhole /></span>
         </div>
         <span className="profile-status"><LockKeyhole size={12} /> Profil ukryty</span>
         <div className="private-fields" aria-hidden="true"><i /><i /></div>
