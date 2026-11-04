@@ -4,6 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
 import { site, PROFILE_IMAGE_URL } from '@/config/site';
+import { track } from '@/lib/landing-analytics';
 import profil01 from '@/assets/suggested/profil-01.webp';
 import profil02 from '@/assets/suggested/profil-02.webp';
 import profil03 from '@/assets/suggested/profil-03.webp';
