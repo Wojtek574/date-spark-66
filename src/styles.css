@@ -121,6 +121,19 @@
 .profile-age p.age-feedback { color: var(--muted-foreground); display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 11px; margin: 15px 0 0; min-height: 36px; }
 .age-feedback svg { color: var(--primary); flex-shrink: 0; }
 .profile-alternative .profile-cover { height: 100px; }
+.suggested-section { margin: 34px 0 40px; }
+.suggested-section h2 { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+.suggested-intro { text-align: center; color: var(--muted-foreground); font-size: 13px; margin-bottom: 22px; }
+.suggested-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.suggested-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 14px 16px; text-align: center; display: flex; flex-direction: column; align-items: center; box-shadow: var(--profile-shadow); }
+.suggested-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--secondary); border: 3px solid var(--card); position: relative; overflow: visible; display: grid; place-items: center; margin-bottom: 10px; }
+.suggested-avatar .blurred-avatar { position: static; width: 44px; height: 44px; }
+.suggested-avatar .avatar-lock-badge { right: -3px; bottom: -3px; }
+.suggested-card .private-fields { margin: 12px 0 14px; width: 100%; }
+.suggested-card .private-fields i { width: 70%; }
+.suggested-card .private-fields i:nth-child(2) { width: 48%; }
+.suggested-card .main-cta { width: 100%; min-height: 42px; font-size: 12px; padding: 10px 12px; gap: 8px; }
+.suggested-card .main-cta svg { width: 14px; height: 14px; }
 footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }
 .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .footer-top .brand { font-size: 18px; }
