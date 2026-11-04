@@ -1,4 +1,5 @@
 # Plan realizacji
+- [x] Sekcja proponowanych profili z dziesięcioma rozmytymi zdjęciami właściciela, bez imion, wieku i fałszywych danych.
 - [x] Wiarygodniejsze statystyki: filtrowanie automatycznego i testowego ruchu, deduplikacja, zaangażowanie, kampanie i uczciwe zakresy A/B.
 - [x] Naprawa ładowania awatara i tła na własnej domenie przez sprawdzony adres zdjęcia.
 - [x] Wyeksponowanie wyboru wieku: wyróżnione tło, większe przyciski, czytelny wybór i dostępne przejście bez wybierania wieku.
