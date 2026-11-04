@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck } from 'lucide-react';
+import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck, UserRound } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
@@ -38,7 +38,25 @@ function HiddenProfile() {
     </div>
   </article>;
 }
+function SuggestedProfiles() {
+  return <section className="suggested-section" aria-labelledby="suggested-title">
+    <h2 id="suggested-title">Więcej profili czeka na Ciebie</h2>
+    <p className="suggested-intro">Pełne profile i zdjęcia zobaczysz po rejestracji.</p>
+    <div className="suggested-grid">
+      {Array.from({ length: 10 }, (_, i) => <article key={i} className="suggested-card">
+        <div className="suggested-avatar" aria-hidden="true">
+          <UserRound className="blurred-avatar" />
+          <span className="avatar-lock-badge"><LockKeyhole /></span>
+        </div>
+        <span className="profile-status"><LockKeyhole size={12} /> Profil ukryty</span>
+        <div className="private-fields" aria-hidden="true"><i /><i /></div>
+        <CTA source={`grid-${i + 1}`} label="Sprawdź profil" />
+      </article>)}
+    </div>
+  </section>;
+}
+
 function Footer() { return <footer><div className="container"><div className="footer-top"><Brand /><span>Nowe znajomości zaczynają się od Ciebie.</span><span className="adult-badge">18+</span></div><div className="footer-links">{Object.entries(site.documents).map(([key, doc]) => <Link key={key} to="/informacje/$document" params={{ document: key }}>{doc.title}<ArrowUpRight size={12} /></Link>)}<Link to="/raportowanie">Konfiguracja i pomiar</Link></div><div className="footer-bottom"><span>© 2026 {site.name}.</span></div></div></footer>; }
 
 
-export function Landing() { return <ExperienceProvider><header className="site-header"><div className="container header-inner"><Brand /><div className="header-right"><span className="adult-badge">18+</span><CTA source="header" label="Załóż konto" /></div></div></header><main className="profile-page"><div className="profile-page-label"><span>PODGLĄD PROFILU</span><span><LockKeyhole size={12} /> Dostęp prywatny</span></div><HiddenProfile /></main><Footer /></ExperienceProvider>; }
+export function Landing() { return <ExperienceProvider><header className="site-header"><div className="container header-inner"><Brand /><div className="header-right"><span className="adult-badge">18+</span><CTA source="header" label="Załóż konto" /></div></div></header><main className="profile-page"><div className="profile-page-label"><span>PODGLĄD PROFILU</span><span><LockKeyhole size={12} /> Dostęp prywatny</span></div><HiddenProfile /><SuggestedProfiles /></main><Footer /></ExperienceProvider>; }
