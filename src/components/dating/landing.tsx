@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck, UserRound } from 'lucide-react';
+import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
