@@ -5,6 +5,16 @@ import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
 import { site, PROFILE_IMAGE_URL } from '@/config/site';
 import { track } from '@/lib/landing-analytics';
+import profil01 from '@/assets/suggested/profil-01.webp';
+import profil02 from '@/assets/suggested/profil-02.webp';
+import profil03 from '@/assets/suggested/profil-03.webp';
+import profil04 from '@/assets/suggested/profil-04.webp';
+import profil05 from '@/assets/suggested/profil-05.webp';
+import profil06 from '@/assets/suggested/profil-06.webp';
+import profil07 from '@/assets/suggested/profil-07.webp';
+import profil08 from '@/assets/suggested/profil-08.webp';
+import profil09 from '@/assets/suggested/profil-09.webp';
+import profil10 from '@/assets/suggested/profil-10.webp';
 
 function HiddenProfile() {
   const variant = useVariant();
@@ -38,16 +48,16 @@ function HiddenProfile() {
     </div>
   </article>;
 }
-const GRID_CROPS = ['center 15%', 'center 35%', 'center 55%', '25% 25%', '75% 25%', '25% 50%', '75% 50%', 'center 75%', '30% 65%', '70% 65%'];
+const SUGGESTED_PHOTOS = [profil01, profil02, profil03, profil04, profil05, profil06, profil07, profil08, profil09, profil10];
 
 function SuggestedProfiles() {
   return <section className="suggested-section" aria-labelledby="suggested-title">
     <h2 id="suggested-title">Więcej profili czeka na Ciebie</h2>
     <p className="suggested-intro">Pełne profile i zdjęcia zobaczysz po rejestracji.</p>
     <div className="suggested-grid">
-      {GRID_CROPS.map((crop, i) => <article key={i} className="suggested-card">
+      {SUGGESTED_PHOTOS.map((photo, i) => <article key={photo} className="suggested-card">
         <div className="suggested-avatar">
-          <img className="suggested-avatar-photo" src={PROFILE_IMAGE_URL} alt="Rozmyte zdjęcie ukrytego profilu" style={{ objectPosition: crop }} loading="lazy" />
+          <img className="suggested-avatar-photo" src={photo} alt="Rozmyte zdjęcie ukrytego profilu" loading="lazy" />
           <span className="avatar-lock-badge" aria-hidden="true"><LockKeyhole /></span>
         </div>
         <span className="profile-status"><LockKeyhole size={12} /> Profil ukryty</span>

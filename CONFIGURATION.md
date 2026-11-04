@@ -1,7 +1,7 @@
 # Konfiguracja przed publikacją
 
 ## Działa bez usług zewnętrznych
-- Landing 18+, ukryty abstrakcyjny podgląd bez zdjęć kobiet, fikcyjnych profili i wiadomości.
+- Landing 18+, ukryty podgląd z rozmytymi zdjęciami dostarczonymi przez właściciela; bez fikcyjnych profili, imion, wieku i treści demonstracyjnych.
 - Wspólne CTA prowadzące do linku partnera, opcjonalny wybór wieku, zamykany pasek mobilny.
 - Zgoda na pomiar i zdarzenia przeglądarkowe; bez skryptu GA4, cookies, localStorage ani danych profilowych.
 - Pojedynczy test A/B przypisany w pamięci bieżącej wizyty, domyślnie wyłączony.
@@ -14,6 +14,7 @@
 4. Potwierdź u partnera funkcje, ceny i zasady; obecna treść nie obiecuje bezpłatności, dopasowania ani odpowiedzi.
 5. Podłącz narzędzie analityczne: załaduj je dopiero po zgodzie i nasłuchuj `miedzy-nami:analytics`. `ANALYTICS_CONFIG` samo niczego nie uruchamia. Nie przesyłaj automatycznie pełnego URL, referrera, wieku ani danych osobowych. Sprawdź ustawienia prywatności wybranego narzędzia.
 6. Faktyczne rejestracje wymagają osobnej integracji/raportów partnera; `affiliate_outbound_click` mierzy jedynie przejście. Nie ma API, bazy ani aktywnej integracji GA4.
+7. Zdjęcia kart proponowanych to `src/assets/suggested/profil-01.webp` … `profil-10.webp`. Podmień plik o tej samej nazwie (portret 300×400, WebP, mocne rozmycie) albo zaktualizuj importy w `src/components/dating/landing.tsx`. Karty nie mają imion, wieku ani lokalizacji i nie należy ich tak podpisywać.
 
 ## Raportowanie
 W narzędziu porównuj odsłony, kliknięcia CTA i przejścia w podziale na `source`, `utm_medium`, `utm_campaign`, `device`, `variant_id`. CTR = `hero_cta_click` / `page_view` × 100%. Porównania prowadź na poziomie wizyt; adapter aktualnie emituje tylko zdarzenia, nie przechowuje raportów. Źródło pochodzi z oczyszczonych parametrów UTM; bez UTM ma wartość `unknown`.

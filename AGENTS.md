@@ -11,6 +11,7 @@
 
 ## Architecture
 - Resolve shared profile media from its asset pointer against the verified Lovable asset-serving origin, not the visitor's domain, because custom-domain hosts may not proxy asset paths.
+- Keep suggested-profile card photos as bundled local WebP assets under `src/assets/suggested` (not asset-pointer URLs) so they load from the app origin on the custom domain and stay small enough for slow connections.
 - Keep destination, public copy, legal links and the single active experiment in `src/config/site.ts` so campaigns can change without rewriting views.
 - Route every affiliate action through the shared CTA and outbound handler; missing or unsafe destinations must show a non-redirecting error.
 - Page statistics use an in-memory random visit ID and signed, same-origin server ingestion into service-only quality events; reports require a password, separate legacy/test/automation traffic, and deduplicate per visit because anonymous visits cannot identify unique people.
