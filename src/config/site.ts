@@ -28,6 +28,12 @@ export const site = {
     kontakt: { title: 'Kontakt', url: '' },
   },
 };
-export type Experiment = 'none' | 'headline' | 'cta' | 'profile' | 'order' | 'secondary';
-export const ACTIVE_EXPERIMENT: Experiment = 'headline'; // Tylko jeden test naraz.
-export const ANALYTICS_CONFIG = { provider: '', measurementId: '' }; // Nie ładuje skryptów bez zgody.
+export type Experiment = 'none' | 'ctaplace' | 'headline' | 'cta' | 'profile' | 'order' | 'secondary';
+export const ACTIVE_EXPERIMENT: Experiment = 'ctaplace'; // Tylko jeden test naraz.
+export const ANALYTICS_CONFIG = { provider: '', measurementId: '' }; // Nie ładuje skryptów bez zgody.// Test CTA: tekst × położenie głównego przycisku (4 warianty, losowane anonimowo na czas wizyty).
+export const CTA_PLACEMENT_VARIANTS = [
+  { label: 'Przejdź do rejestracji', position: 'below', name: '„Przejdź do rejestracji” · pod opisem' },
+  { label: 'Sprawdź dostępne profile', position: 'below', name: '„Sprawdź dostępne profile” · pod opisem' },
+  { label: 'Przejdź do rejestracji', position: 'above', name: '„Przejdź do rejestracji” · nad opisem' },
+  { label: 'Sprawdź dostępne profile', position: 'above', name: '„Sprawdź dostępne profile” · nad opisem' },
+] as const;

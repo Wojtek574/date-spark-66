@@ -22,7 +22,7 @@ let variant: Variant = { experiment: 'none', index: 0, id: 'control' };
 let visitVariant: Variant | undefined;
 export function assignVariant(): Variant {
   if (visitVariant) return visitVariant;
-  const count = ACTIVE_EXPERIMENT === 'headline' ? 3 : ACTIVE_EXPERIMENT === 'none' ? 1 : 2;
+  const count = ACTIVE_EXPERIMENT === 'ctaplace' ? 4 : ACTIVE_EXPERIMENT === 'headline' ? 3 : ACTIVE_EXPERIMENT === 'none' ? 1 : 2;
   const index = Math.floor(Math.random() * count);
   variant = { experiment: ACTIVE_EXPERIMENT, index, id: ACTIVE_EXPERIMENT === 'none' ? 'control' : `${ACTIVE_EXPERIMENT}-${index}` };
   visitVariant = variant;

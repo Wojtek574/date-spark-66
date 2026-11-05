@@ -2,7 +2,7 @@ import { useEffect, useState, createContext, useContext, type ReactNode } from '
 import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
-import { site } from '@/config/site';
+import { site, CTA_PLACEMENT_VARIANTS } from '@/config/site';
 import { assignVariant, outbound, track, startEngagement, type Variant } from '@/lib/landing-analytics';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
@@ -43,7 +43,7 @@ export function useVariant() { return useContext(Experience).variant; }
 export function CTA({ source, label, secondary = false }: { source: string; label?: string; secondary?: boolean }) {
   const { variant, consent, openMissing } = useContext(Experience);
   const [loading, setLoading] = useState(false);
-  const text = label ?? site.ctaLabels[variant.experiment === 'cta' ? variant.index : 0];
+  const text = label ?? (variant.experiment === 'ctaplace' ? CTA_PLACEMENT_VARIANTS[variant.index]?.label : undefined) ?? site.ctaLabels[variant.experiment === 'cta' ? variant.index : 0];
   useEffect(() => {
     const reset = () => setLoading(false);
     const onVisible = () => { if (document.visibilityState === 'visible') reset(); };
