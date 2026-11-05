@@ -3,7 +3,7 @@ import { ArrowUpRight, Check, LockKeyhole, MapPin, ShieldCheck } from 'lucide-re
 import { Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
 import { CTA, Brand, ExperienceProvider, useVariant } from './experience';
-import { site, PROFILE_IMAGE_URL } from '@/config/site';
+import { site, PROFILE_IMAGE_URL, CTA_PLACEMENT_VARIANTS } from '@/config/site';
 import { track } from '@/lib/landing-analytics';
 import profil01 from '@/assets/suggested/profil-01.webp';
 import profil02 from '@/assets/suggested/profil-02.webp';
@@ -19,6 +19,7 @@ import profil10 from '@/assets/suggested/profil-10.webp';
 function HiddenProfile() {
   const variant = useVariant();
   const [age, setAge] = useState('');
+  const ctaAbove = variant.experiment === 'ctaplace' && CTA_PLACEMENT_VARIANTS[variant.index]?.position === 'above';
   const headline = site.headlines[variant.experiment === 'headline' ? variant.index : 0] ?? 'Profil ukryty';
   return <article className={`single-profile ${variant.experiment === 'profile' && variant.index === 1 ? 'profile-alternative' : ''}`} aria-labelledby="profile-title">
     <div className="profile-cover" aria-hidden="true"><img className="profile-cover-photo" src={PROFILE_IMAGE_URL} alt="" /></div>
@@ -28,8 +29,9 @@ function HiddenProfile() {
       <h1 id="profile-title">{headline}</h1>
       <div className="hidden-location"><MapPin size={16} /><span aria-label="Lokalizacja ukryta" /></div>
       <div className="private-fields" aria-hidden="true"><i /><i /><i /></div>
+      {ctaAbove && <CTA source="hero" />}
       <div className="profile-message"><LockKeyhole size={20} /><h2>Nie wszystko widać od razu.</h2><p>{site.copy.profileIntro}</p></div>
-      <CTA source="hero" />
+      {!ctaAbove && <CTA source="hero" />}
       {!(variant.experiment === 'secondary' && variant.index === 1) && <CTA source="profile-secondary" label="Sprawdź możliwości rozmowy" secondary />}
       <div className="profile-assurance"><ShieldCheck size={14} /> {site.copy.destinationNote}</div>
       <section id="age-selection" className="profile-age" tabIndex={-1} aria-labelledby="age-title">
