@@ -23,3 +23,11 @@ describe('Privacy-safe affiliate landing', () => {
     window.removeEventListener('miedzy-nami:analytics', handler);
   });
 });
+import { CTA_PLACEMENT_VARIANTS, ACTIVE_EXPERIMENT } from '@/config/site';
+describe('CTA text x placement test', () => {
+  it('assigns one of four ctaplace variants', () => {
+    expect(ACTIVE_EXPERIMENT).toBe('ctaplace');
+    expect(CTA_PLACEMENT_VARIANTS).toHaveLength(4);
+    expect(assignVariant().id).toMatch(/^ctaplace-[0-3]$/);
+  });
+});
