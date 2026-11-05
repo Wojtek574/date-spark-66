@@ -15,7 +15,7 @@
 - Keep destination, public copy, legal links and the single active experiment in `src/config/site.ts` so campaigns can change without rewriting views.
 - Route every affiliate action through the shared CTA and outbound handler; missing or unsafe destinations must show a non-redirecting error.
 - Page statistics use an in-memory random visit ID and signed, same-origin server ingestion into service-only quality events; reports require a password, separate legacy/test/automation traffic, and deduplicate per visit because anonymous visits cannot identify unique people.
-- Assign only one experimental variable in memory per visit, with no persistent age or experiment storage, to respect visitor privacy.
+- Assign only one active experiment (possibly a factorial of CTA text × placement) in memory per visit, with no persistent age or experiment storage, to respect visitor privacy.
 
 - Keep conversion improvements in the shared CTA and existing profile flow, with a sticky header, viewport-aware mobile CTA and optional age-selection continuation; this keeps one destination and avoids additional registration steps.
 
