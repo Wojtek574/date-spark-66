@@ -65,6 +65,10 @@ function SuggestedProfiles() {
         <CTA source={`grid-${i + 1}`} label="Sprawdź profil" />
       </article>)}
     </div>
+    <div className="suggested-more">
+      <p>Chcesz zobaczyć zdjęcia bez rozmycia? Załóż darmowe konto — to zajmuje chwilę.</p>
+      <CTA source="grid-bottom" label="Odblokuj wszystkie profile" />
+    </div>
   </section>;
 }
 

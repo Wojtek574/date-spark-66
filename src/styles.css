@@ -193,3 +193,13 @@ footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }
 .stats-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .stats-table th, .stats-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .stats-note { font-size: 13px; color: var(--muted-foreground); margin-top: 10px; }
+.suggested-card { transition: transform .2s ease, box-shadow .2s ease; padding: 10px 10px 14px; }
+.suggested-card:hover { transform: translateY(-3px); }
+.suggested-avatar { width: 100%; height: auto; aspect-ratio: 4 / 5; border-radius: 6px; border: 0; overflow: hidden; }
+.suggested-avatar-photo { border-radius: 6px; transform: scale(1.06); }
+.suggested-avatar .avatar-lock-badge { right: 8px; bottom: 8px; }
+.suggested-more { margin-top: 22px; padding: 20px 16px; text-align: center; background: var(--card); border: 1px solid var(--border); border-radius: 8px; box-shadow: var(--profile-shadow); }
+.suggested-more p { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+.suggested-more .main-cta { width: 100%; max-width: 360px; }
+@media (min-width: 768px) { .suggested-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .suggested-card { transition: none; } .suggested-card:hover { transform: none; } }
