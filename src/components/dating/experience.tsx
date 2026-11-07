@@ -1,9 +1,11 @@
 import { useEffect, useState, createContext, useContext, type ReactNode } from 'react';
+import { useServerFn } from '@tanstack/react-start';
 import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
-import { site, CTA_PLACEMENT_VARIANTS } from '@/config/site';
-import { assignVariant, outbound, track, startEngagement, type Variant } from '@/lib/landing-analytics';
+import { site, ACTIVE_EXPERIMENT, CTA_PLACEMENT_VARIANTS } from '@/config/site';
+import { assignVariant, outbound, track, startEngagement, setServedVariant, type Variant } from '@/lib/landing-analytics';
+import { getServedVariant } from '@/lib/stats.functions';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
 export function Brand() { return <a href="/" className="brand" aria-label={`${site.name} — strona główna`}><Heart aria-hidden="true" /><span>{site.name}</span></a>; }
@@ -12,7 +14,21 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [missing, setMissing] = useState(false);
   const [sticky, setSticky] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  useEffect(() => { setVariant(assignVariant()); track('page_view'); return startEngagement(); }, []);
+  const fetchServed = useServerFn(getServedVariant);
+  // Losowanie natychmiast, a dopiero potem sprawdzenie, czy serwer wybrał już zwycięzcę — odsłona czeka na rozstrzygnięcie.
+  useEffect(() => {
+    const initial = assignVariant();
+    setVariant(initial);
+    let settled = false;
+    const finish = () => { if (settled) return; settled = true; track('page_view'); };
+    const timer = window.setTimeout(finish, 800);
+    const stopEngagement = startEngagement();
+    void fetchServed()
+      .then(served => { if (served && served.experiment === ACTIVE_EXPERIMENT && served.index !== initial.index) { setServedVariant(served); setVariant(served); } })
+      .catch(() => undefined)
+      .finally(() => { window.clearTimeout(timer); finish(); });
+    return () => { window.clearTimeout(timer); stopEngagement(); };
+  }, [fetchServed]);
   useEffect(() => {
     const seen = new Set<string>();
     const onScroll = () => {
