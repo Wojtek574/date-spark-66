@@ -1,4 +1,4 @@
-import { ACTIVE_EXPERIMENT, AFFILIATE_URL } from '@/config/site';
+import { ACTIVE_EXPERIMENT, AFFILIATE_URL, EXPERIMENT_VARIANT_COUNT } from '@/config/site';
 const STORED = new Set(['page_view', 'cta_view', 'cta_click', 'age_group_selected', 'scroll_50', 'scroll_90', 'affiliate_outbound_click', 'engagement']);
 let visitId = '';
 let token: string | undefined;
@@ -22,11 +22,17 @@ let variant: Variant = { experiment: 'none', index: 0, id: 'control' };
 let visitVariant: Variant | undefined;
 export function assignVariant(): Variant {
   if (visitVariant) return visitVariant;
-  const count = ACTIVE_EXPERIMENT === 'ctaplace' ? 4 : ACTIVE_EXPERIMENT === 'headline' ? 3 : ACTIVE_EXPERIMENT === 'none' ? 1 : 2;
+  const count = EXPERIMENT_VARIANT_COUNT[ACTIVE_EXPERIMENT] ?? 1;
   const index = Math.floor(Math.random() * count);
   variant = { experiment: ACTIVE_EXPERIMENT, index, id: ACTIVE_EXPERIMENT === 'none' ? 'control' : `${ACTIVE_EXPERIMENT}-${index}` };
   visitVariant = variant;
   return variant;
+}
+// Wariant wskazany przez serwer po przekroczeniu progu — nadpisuje losowanie dla tej wizyty.
+export function setServedVariant(next: Variant) {
+  if (ACTIVE_EXPERIMENT === 'none' || next.experiment !== ACTIVE_EXPERIMENT) return;
+  variant = next;
+  visitVariant = next;
 }
 function safeCampaign(value: string | null) {
   return value && /^[a-zA-Z0-9_-]{1,64}$/.test(value) ? value : undefined;

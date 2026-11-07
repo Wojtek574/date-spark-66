@@ -30,6 +30,10 @@ export const site = {
 };
 export type Experiment = 'none' | 'ctaplace' | 'headline' | 'cta' | 'profile' | 'order' | 'secondary';
 export const ACTIVE_EXPERIMENT: Experiment = 'ctaplace'; // Tylko jeden test naraz.
+// Ile wariantów ma dany test — używane przy losowaniu i przy ocenie wyniku.
+export const EXPERIMENT_VARIANT_COUNT: Record<Experiment, number> = { none: 1, ctaplace: 4, headline: 3, cta: 2, profile: 2, order: 2, secondary: 2 };
+// Próg automatycznej podmiany: każdy wariant musi mieć min. tyle wizyt, a prowadzący musi mieć przedział 95% ponad drugiem.
+export const EXPERIMENT_RULES = { minVisitsPerVariant: 100, windowDays: 90 };
 export const ANALYTICS_CONFIG = { provider: '', measurementId: '' }; // Nie ładuje skryptów bez zgody.// Test CTA: tekst × położenie głównego przycisku (4 warianty, losowane anonimowo na czas wizyty).
 export const CTA_PLACEMENT_VARIANTS = [
   { label: 'Przejdź do rejestracji', position: 'below', name: '„Przejdź do rejestracji” · pod opisem' },

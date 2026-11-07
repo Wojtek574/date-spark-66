@@ -7,6 +7,31 @@ export function wilson(success: number, total: number) {
   const spread = z * Math.sqrt(p * (1 - p) / total + z * z / (4 * total * total)) / d;
   return [Math.max(0, middle - spread) * 100, Math.min(1, middle + spread) * 100];
 }
+export type ExperimentDecision =
+  | { status: 'insufficient'; leader: string | null; reason: string; variants: number; needed: number }
+  | { status: 'unclear'; leader: string; reason: string; variants: number; needed: number }
+  | { status: 'promoted'; leader: string; winner: string; reason: string; variants: number; needed: number };
+const rate = (g: Group) => g.outbound / (g.visits || 1);
+export function variantGroups(counts: { variant_id: string; visits: number; outbound: number }[]): Group[] {
+  return counts.map(c => { const [low = 0, high = 0] = wilson(c.outbound, c.visits); return { key: c.variant_id, visits: c.visits, clicks: 0, outbound: c.outbound, low, high }; });
+}
+// Ocena testu: najpierw próbka każdego wariantu, potem dopiero wyraźne prowadzenie (rozłączne przedziały 95%).
+export function evaluateExperiment(rows: Group[], experiment: string, rules: { minVisitsPerVariant: number }): ExperimentDecision {
+  const pattern = new RegExp(`^${experiment}-(\\d+)$`);
+  const variants = rows
+    .map(r => ({ ...r, index: Number(pattern.exec(r.key)?.[1]) }))
+    .filter(r => Number.isInteger(r.index))
+    .sort((a, b) => a.index - b.index);
+  const needed = rules.minVisitsPerVariant;
+  const ranked = [...variants].sort((a, b) => rate(b) - rate(a));
+  const leader = ranked[0]?.key ?? null;
+  if (variants.length < 2) return { status: 'insufficient', leader, reason: 'W raporcie nie ma jeszcze co najmniej dwóch wariantów tego testu.', variants: variants.length, needed };
+  const shortest = Math.min(...variants.map(v => v.visits));
+  if (shortest < needed) return { status: 'insufficient', leader, reason: `Każdy wariant potrzebuje min. ${needed} wizyt; najsłabiej zebrany ma ${shortest}.`, variants: variants.length, needed };
+  const first = ranked[0]!, second = ranked[1]!;
+  if (rate(first) > rate(second) && first.low > second.high) return { status: 'promoted', leader: first.key, winner: first.key, reason: 'Przedział 95% prowadzącego leży całkowicie ponad drugim wariantem.', variants: variants.length, needed };
+  return { status: 'unclear', leader: first.key, reason: 'Różnica między prowadzącym a drugim wariantem mieści się w granicach niepewności.', variants: variants.length, needed };
+}
 export function classifyTraffic(ua: string, host: string, webdriver: boolean) {
   if (webdriver || /bot|crawler|spider|headless|lighthouse|preview|facebookexternalhit|slurp|curl|wget/i.test(ua) || !ua) return 'automation';
   if (/localhost|127\.0\.0\.1|id-preview|\.lovableproject\.com/i.test(host)) return 'test';
