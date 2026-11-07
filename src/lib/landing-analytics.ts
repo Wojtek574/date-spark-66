@@ -1,4 +1,4 @@
-import { ACTIVE_EXPERIMENT, AFFILIATE_URL } from '@/config/site';
+import { ACTIVE_EXPERIMENT, AFFILIATE_URL, EXPERIMENT_VARIANT_COUNT } from '@/config/site';
 const STORED = new Set(['page_view', 'cta_view', 'cta_click', 'age_group_selected', 'scroll_50', 'scroll_90', 'affiliate_outbound_click', 'engagement']);
 let visitId = '';
 let token: string | undefined;
@@ -20,19 +20,35 @@ export type EventName = 'page_view' | 'cta_view' | 'cta_click' | 'hero_cta_click
 export type Variant = { experiment: string; index: number; id: string };
 let variant: Variant = { experiment: 'none', index: 0, id: 'control' };
 let visitVariant: Variant | undefined;
+let holding = false;
+const buffered: Array<[EventName, Record<string, string | number>]> = [];
 export function assignVariant(): Variant {
   if (visitVariant) return visitVariant;
-  const count = ACTIVE_EXPERIMENT === 'ctaplace' ? 4 : ACTIVE_EXPERIMENT === 'headline' ? 3 : ACTIVE_EXPERIMENT === 'none' ? 1 : 2;
+  const count = EXPERIMENT_VARIANT_COUNT[ACTIVE_EXPERIMENT] ?? 1;
   const index = Math.floor(Math.random() * count);
   variant = { experiment: ACTIVE_EXPERIMENT, index, id: ACTIVE_EXPERIMENT === 'none' ? 'control' : `${ACTIVE_EXPERIMENT}-${index}` };
   visitVariant = variant;
   return variant;
+}
+// Wariant wskazany przez serwer po przekroczeniu progu — nadpisuje losowanie, dopóki wizyta nie została zapisana.
+export function setServedVariant(next: Variant) {
+  if (ACTIVE_EXPERIMENT === 'none' || seen.has('page_view:') || next.experiment !== ACTIVE_EXPERIMENT) return;
+  variant = next;
+  visitVariant = next;
+}
+// Zatrzymuje zapis zdarzeń, aż wizyta pozna wariant wskazany przez serwer.
+export function holdEvents() { holding = true; }
+export function releaseEvents() {
+  holding = false;
+  const queued = buffered.splice(0);
+  for (const [name, detail] of queued) track(name, detail);
 }
 function safeCampaign(value: string | null) {
   return value && /^[a-zA-Z0-9_-]{1,64}$/.test(value) ? value : undefined;
 }
 export function track(name: EventName, detail: Record<string, string | number> = {}) {
   if (typeof window === 'undefined') return;
+  if (holding) { buffered.push([name, detail]); return; }
   assignVariant();
   if(STORED.has(name) && name!=='page_view' && !seen.has('page_view:')) track('page_view');
   if (!visitId) visitId = crypto.randomUUID();
@@ -72,6 +88,7 @@ export function affiliateIsConfigured(url = AFFILIATE_URL) {
 }
 export function outbound(source: string, url = AFFILIATE_URL) {
   if (!affiliateIsConfigured(url)) return false;
+  if (holding) releaseEvents();
   track('affiliate_outbound_click', { placement: source });
   void Promise.race([queue,new Promise(resolve=>setTimeout(resolve,1000))]).then(()=>window.location.assign(url));
   return true;

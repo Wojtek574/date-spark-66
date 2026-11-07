@@ -14,6 +14,27 @@ export type Database = {
   }
   public: {
     Tables: {
+      experiment_decisions: {
+        Row: {
+          decided_at: string
+          evidence: Json
+          experiment: string
+          variant_id: string
+        }
+        Insert: {
+          decided_at?: string
+          evidence?: Json
+          experiment: string
+          variant_id: string
+        }
+        Update: {
+          decided_at?: string
+          evidence?: Json
+          experiment?: string
+          variant_id?: string
+        }
+        Relationships: []
+      }
       page_events: {
         Row: {
           created_at: string
@@ -103,7 +124,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      experiment_variant_stats: {
+        Args: { since: string }
+        Returns: {
+          outbound: number
+          variant_id: string
+          visits: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

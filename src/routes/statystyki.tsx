@@ -4,7 +4,8 @@ import { ArrowLeft, BarChart3, LoaderCircle } from 'lucide-react';
 import { Brand } from '@/components/dating/experience';
 import { Button } from '@/components/ui/button';
 import { getStats, type Group } from '@/lib/stats.functions';
-import { site, CTA_PLACEMENT_VARIANTS } from '@/config/site';
+import { evaluateExperiment } from '@/lib/stats-model';
+import { site, ACTIVE_EXPERIMENT, CTA_PLACEMENT_VARIANTS, EXPERIMENT_RULES } from '@/config/site';
 import { useServerFn } from '@tanstack/react-start';
 
 export const Route = createFileRoute('/statystyki')({
@@ -32,6 +33,7 @@ function Stats() {
     setLoading(false);
   }
   const ok = result?.ok ? result : null;
+  const decision = ok ? evaluateExperiment(ok.variants, ACTIVE_EXPERIMENT, EXPERIMENT_RULES) : null;
   return <div className="info-page container"><Brand /><Link to="/" className="back-link"><ArrowLeft size={16} /> Wróć na stronę główną</Link><BarChart3 className="text-primary" size={32} /><h1>Statystyki strony</h1>
     <form className="stats-form" onSubmit={load}>
       <label>Hasło<input type="password" value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" required /></label>
@@ -46,7 +48,12 @@ function Stats() {
       <section className="stats-block"><h2>Jakość danych</h2><ul><li>Odfiltrowane wizyty automatyczne: <strong>{ok.quality.automation}</strong></li><li>Podgląd i ruch lokalny: <strong>{ok.quality.test}</strong></li><li>Wizyty bez odsłony w wybranym okresie: <strong>{ok.quality.orphan}</strong> — pominięte.</li><li>Historyczne zdarzenia bez nowych filtrów: <strong>{ok.legacy}</strong> — nie są mieszane z nowym raportem.</li></ul><p className="stats-note">Filtry wykrywają znane boty i oznaczenia automatyzacji, lecz nie potwierdzają tożsamości człowieka. Wizyty bez oznak automatyzacji mogą nadal zawierać nierozpoznane boty. Brak cookies i identyfikowania osób między wizytami: odświeżenie lub nowa karta to nowa wizyta.</p></section>
       <Table title="Dzienny przebieg ruchu" rows={ok.daily} />
       <Table title="Test A/B — tekst i położenie CTA (od najwyższego odsetka wyjść)" rows={[...ok.variants].sort((a, b) => b.outbound / (b.visits || 1) - a.outbound / (a.visits || 1))} label={variantName} />
-      <p className="stats-note">Przedział 95% (Wilson) pokazuje niepewność odsetka wyjść. Sama liczba 300 wizyt nie oznacza wiarygodnego zwycięzcy; panel nie ogłasza zwycięzcy A/B.</p>
+      <section className="stats-block"><h2>Automatyczna podmiana wariantu</h2>
+        {ok.promoted
+          ? <p>Test zakończony — strona pokazuje wariant <strong>{variantName(ok.promoted.variantId)}</strong>. Decyzja zapadła {new Date(ok.promoted.decidedAt).toLocaleString('pl-PL')}.</p>
+          : <p>{decision?.status === 'insufficient' ? 'Jeszcze za mało danych, aby wariant podmienić: ' : 'Wariant nie został podmieniony: '}{decision?.reason}</p>}
+        <p className="stats-note">Podmiana następuje sama, gdy każdy wariant zbierze min. {EXPERIMENT_RULES.minVisitsPerVariant} wizyt i przedział 95% prowadzącego leży całkowicie ponad drugim wariantem. Do tego czasu test trwa. Przedział 95% (Wilson) pokazuje niepewność odsetka wyjść; sama liczba wizyt nie oznacza zwycięzcy.</p>
+      </section>
       <Table title="Urządzenia" rows={ok.devices} label={k => (k === 'mobile' ? 'Telefon' : k === 'tablet' ? 'Tablet' : 'Komputer')} />
       <Table title="Źródła ruchu" rows={ok.sources} label={k => (k === 'direct' ? 'Bezpośrednio' : k)} />
       <Table title="Kampanie — źródło / medium / kampania" rows={ok.campaigns} />
