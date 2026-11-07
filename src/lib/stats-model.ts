@@ -12,8 +12,8 @@ export type ExperimentDecision =
   | { status: 'unclear'; leader: string; reason: string; variants: number; needed: number }
   | { status: 'promoted'; leader: string; winner: string; reason: string; variants: number; needed: number };
 const rate = (g: Group) => g.outbound / (g.visits || 1);
-export function variantGroups(counts: { variant_id: string; visits: number; outbound: number }[]): Group[] {
-  return counts.map(c => { const [low = 0, high = 0] = wilson(c.outbound, c.visits); return { key: c.variant_id, visits: c.visits, clicks: 0, outbound: c.outbound, low, high }; });
+export function variantGroups(counts: { variant_id: string; visits: number | string; outbound: number | string }[]): Group[] {
+  return counts.map(c => { const visits = Number(c.visits) || 0; const outbound = Number(c.outbound) || 0; const [low = 0, high = 0] = wilson(outbound, visits); return { key: c.variant_id, visits, clicks: 0, outbound, low, high }; });
 }
 // Ocena testu: najpierw próbka każdego wariantu, potem dopiero wyraźne prowadzenie (rozłączne przedziały 95%).
 export function evaluateExperiment(rows: Group[], experiment: string, rules: { minVisitsPerVariant: number }): ExperimentDecision {
