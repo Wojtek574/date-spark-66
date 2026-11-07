@@ -1,6 +1,6 @@
 export type StatsRow = { visit_id: string; event: string; variant_id: string; device: string; source: string; placement: string | null; created_at: string; quality: string; active_ms: number; browser: string; os: string; medium: string | null; campaign: string | null };
 export type Group = { key: string; visits: number; clicks: number; outbound: number; low: number; high: number };
-export function wilson(success: number, total: number) {
+export function wilson(success: number, total: number): [number, number] {
   if (!total) return [0, 0];
   const p = success / total, z = 1.96, d = 1 + z * z / total;
   const middle = (p + z * z / (2 * total)) / d;

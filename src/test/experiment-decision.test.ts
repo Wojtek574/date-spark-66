@@ -32,7 +32,7 @@ describe('Automatic variant promotion', () => {
   });
 
   it('builds report groups from server counts', () => {
-    const [only] = variantGroups([{ variant_id: 'ctaplace-1', visits: '200', outbound: '20' }]);
+    const only = variantGroups([{ variant_id: 'ctaplace-1', visits: '200', outbound: '20' }])[0]!;
     expect(only).toMatchObject({ key: 'ctaplace-1', visits: 200, outbound: 20 });
     expect(only.high).toBeGreaterThan(only.low);
   });
