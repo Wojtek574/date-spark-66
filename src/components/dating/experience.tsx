@@ -4,7 +4,7 @@ import { ArrowDown, ArrowUpRight, Heart, LoaderCircle, LockKeyhole, X } from 'lu
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { site, ACTIVE_EXPERIMENT, CTA_PLACEMENT_VARIANTS } from '@/config/site';
-import { assignVariant, outbound, track, startEngagement, setServedVariant, type Variant } from '@/lib/landing-analytics';
+import { assignVariant, outbound, track, startEngagement, setServedVariant, holdEvents, releaseEvents, type Variant } from '@/lib/landing-analytics';
 import { getServedVariant } from '@/lib/stats.functions';
 
 const Experience = createContext<{ variant: Variant; consent: boolean; openMissing: () => void }>({ variant: { experiment: 'none', index: 0, id: 'control' }, consent: false, openMissing: () => {} });
@@ -15,20 +15,20 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   const [sticky, setSticky] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const fetchServed = useServerFn(getServedVariant);
-  // Losowanie natychmiast, a dopiero potem sprawdzenie, czy serwer wybrał już zwycięzcę — odsłona czeka na rozstrzygnięcie.
+  // Zapis wizyty czeka na decyzję serwera: najpierw wariant wskazany po progu, dopiero potem losowany.
   useEffect(() => {
+    holdEvents();
     const initial = assignVariant();
     setVariant(initial);
-    console.log('[vdbg] effect', initial.id, Math.round(performance.now()));
-    let settled = false;
-    const finish = () => { if (settled) return; settled = true; console.log('[vdbg] page_view', Math.round(performance.now())); track('page_view'); };
-    const timer = window.setTimeout(finish, 800);
+    let released = false;
+    const release = () => { if (released) return; released = true; releaseEvents(); };
+    const timer = window.setTimeout(release, 1500);
     const stopEngagement = startEngagement();
     void fetchServed()
-      .then(served => { console.log('[vdbg] answer', served?.id ?? 'null', Math.round(performance.now())); if (served && served.experiment === ACTIVE_EXPERIMENT && served.index !== initial.index) { setServedVariant(served); setVariant(served); } })
+      .then(served => { if (served && served.experiment === ACTIVE_EXPERIMENT && served.index !== initial.index) { setServedVariant(served); setVariant(served); } })
       .catch(() => undefined)
-      .finally(() => { window.clearTimeout(timer); finish(); });
-    return () => { window.clearTimeout(timer); stopEngagement(); };
+      .finally(() => { window.clearTimeout(timer); release(); });
+    return () => { window.clearTimeout(timer); release(); stopEngagement(); };
   }, [fetchServed]);
   useEffect(() => {
     const seen = new Set<string>();
