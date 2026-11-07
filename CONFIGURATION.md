@@ -20,7 +20,13 @@
 W narzędziu porównuj odsłony, kliknięcia CTA i przejścia w podziale na `source`, `utm_medium`, `utm_campaign`, `device`, `variant_id`. CTR = `hero_cta_click` / `page_view` × 100%. Porównania prowadź na poziomie wizyt; adapter aktualnie emituje tylko zdarzenia, nie przechowuje raportów. Źródło pochodzi z oczyszczonych parametrów UTM; bez UTM ma wartość `unknown`.
 
 ## Eksperymenty
-Ustaw jeden `ACTIVE_EXPERIMENT`: `headline`, `cta`, `profile`, `order` albo `secondary`; `none` wyłącza test. Wariant pozostaje stały w aktualnej wizycie SPA, a pełne odświeżenie zaczyna nową wizytę bez trwałego zapisu. Nagłówki i teksty CTA znajdują się w konfiguracji. Ustal długość testu, minimalną próbę oraz metodę oceny przed startem. Bez danych nie ma zwycięzcy.
+Ustaw jeden `ACTIVE_EXPERIMENT`: `ctaplace`, `headline`, `cta`, `profile`, `order` albo `secondary`; `none` wyłącza test. Wariant pozostaje stały w aktualnej wizycie SPA, a pełne odświeżenie zaczyna nową wizytę bez trwałego zapisu. Nagłówki i teksty CTA znajdują się w konfiguracji.
+
+Test wygrywa sam, gdy zostaną spełnione oba warunki z `EXPERIMENT_RULES` w `src/config/site.ts`:
+1. każdy wariant zbierze min. `minVisitsPerVariant` wizyt (obecnie 100),
+2. przedział 95% odsetka wyjść prowadzącego leży całkowicie ponad przedziałem drugiego wariantu.
+
+Wtedy serwer zapisuje decyzję i od tej chwili nowym wizytom pokazuje tylko zwycięski wariant; panel `/statystyki` pokazuje status („jeszcze za mało danych”, „różnica niewystarczająca” albo „test zakończony”). Aby uruchomić nowy test, zmień `ACTIVE_EXPERIMENT` na inną nazwę. Ponowne uruchomienie tego samego testu wymaga usunięcia zapisanej decyzji — poproś o to. Bez danych nie ma zwycięzcy.
 
 ## Zakres inspiracji
 Sprawdzono stronę referencyjną: ukryty profil i krótka ścieżka do rejestracji. Nie przeniesiono jej nazwy, tekstów, danych osób, liczników, procentów ani oczekujących wiadomości. Projekt używa własnej identyfikacji, kompozycji i tekstów.

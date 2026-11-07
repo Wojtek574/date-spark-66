@@ -40,6 +40,7 @@ export function setServedVariant(next: Variant) {
 export function holdEvents() { holding = true; }
 export function releaseEvents() {
   holding = false;
+  if (!seen.has('page_view:')) track('page_view');
   const queued = buffered.splice(0);
   for (const [name, detail] of queued) track(name, detail);
 }

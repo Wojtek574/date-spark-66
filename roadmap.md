@@ -1,4 +1,5 @@
 # Plan realizacji
+- [x] Automatyczna podmiana wariantu: serwer zapisuje zwycięzcę po probie 100 wizyt na wariant i rozłącznych przedziałach 95%, a panel pokazuje status decyzji.
 - [x] Sekcja proponowanych profili z dziesięcioma rozmytymi zdjęciami właściciela, bez imion, wieku i fałszywych danych.
 - [x] Wiarygodniejsze statystyki: filtrowanie automatycznego i testowego ruchu, deduplikacja, zaangażowanie, kampanie i uczciwe zakresy A/B.
 - [x] Naprawa ładowania awatara i tła na własnej domenie przez sprawdzony adres zdjęcia.
