@@ -33,8 +33,7 @@ function parseVariant(id: string | null | undefined) {
   if (!Number.isInteger(index) || index < 0 || index >= (EXPERIMENT_VARIANT_COUNT[ACTIVE_EXPERIMENT] ?? 0)) return null;
   return { experiment: ACTIVE_EXPERIMENT, index, id: `${ACTIVE_EXPERIMENT}-${index}` };
 }
-// Publiczne pytanie „który wariant pokazać” — nigdy nie zwraca liczb ani odsetków.
-export const getServedVariant = createServerFn({ method: 'POST' }).handler(async () => {
+// Publiczne pytanie „który wariant pokazać” — nigdy nie zwraca liczb ani odsetków.export const getServedVariant = createServerFn({ method: 'POST' }).handler(async () => {
   setResponseHeader('Cache-Control', 'no-store');
   if (ACTIVE_EXPERIMENT === 'none') return null;
   if (promotedVariant) return promotedVariant;
