@@ -19,12 +19,13 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initial = assignVariant();
     setVariant(initial);
+    console.log('[vdbg] effect', initial.id, Math.round(performance.now()));
     let settled = false;
-    const finish = () => { if (settled) return; settled = true; track('page_view'); };
+    const finish = () => { if (settled) return; settled = true; console.log('[vdbg] page_view', Math.round(performance.now())); track('page_view'); };
     const timer = window.setTimeout(finish, 800);
     const stopEngagement = startEngagement();
     void fetchServed()
-      .then(served => { if (served && served.experiment === ACTIVE_EXPERIMENT && served.index !== initial.index) { setServedVariant(served); setVariant(served); } })
+      .then(served => { console.log('[vdbg] answer', served?.id ?? 'null', Math.round(performance.now())); if (served && served.experiment === ACTIVE_EXPERIMENT && served.index !== initial.index) { setServedVariant(served); setVariant(served); } })
       .catch(() => undefined)
       .finally(() => { window.clearTimeout(timer); finish(); });
     return () => { window.clearTimeout(timer); stopEngagement(); };
