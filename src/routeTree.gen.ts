@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProfilRouteImport } from './routes/profil'
 import { Route as RaportowanieRouteImport } from './routes/raportowanie'
 import { Route as StatystykiRouteImport } from './routes/statystyki'
 import { Route as InformacjeDocumentRouteImport } from './routes/informacje.$document'
@@ -18,6 +19,11 @@ import { Route as ApiPublicEventsRouteImport } from './routes/api/public/events'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfilRoute = ProfilRouteImport.update({
+  id: '/profil',
+  path: '/profil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RaportowanieRoute = RaportowanieRouteImport.update({
@@ -43,6 +49,7 @@ const ApiPublicEventsRoute = ApiPublicEventsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/profil': typeof ProfilRoute
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/profil': typeof ProfilRoute
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/profil': typeof ProfilRoute
   '/raportowanie': typeof RaportowanieRoute
   '/statystyki': typeof StatystykiRoute
   '/informacje/$document': typeof InformacjeDocumentRoute
@@ -67,6 +76,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/profil'
     | '/raportowanie'
     | '/statystyki'
     | '/informacje/$document'
@@ -74,6 +84,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/profil'
     | '/raportowanie'
     | '/statystyki'
     | '/informacje/$document'
@@ -81,6 +92,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/profil'
     | '/raportowanie'
     | '/statystyki'
     | '/informacje/$document'
@@ -89,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProfilRoute: typeof ProfilRoute
   RaportowanieRoute: typeof RaportowanieRoute
   StatystykiRoute: typeof StatystykiRoute
   InformacjeDocumentRoute: typeof InformacjeDocumentRoute
@@ -102,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profil': {
+      id: '/profil'
+      path: '/profil'
+      fullPath: '/profil'
+      preLoaderRoute: typeof ProfilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/raportowanie': {
@@ -137,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProfilRoute: ProfilRoute,
   RaportowanieRoute: RaportowanieRoute,
   StatystykiRoute: StatystykiRoute,
   InformacjeDocumentRoute: InformacjeDocumentRoute,

@@ -1,4 +1,5 @@
 # Plan realizacji
+- [x] Osobna strona `/profil` z jednym ukrytym profilem i odnośnikiem w nagłówku oraz stopce strony głównej.
 - [x] Automatyczna podmiana wariantu: serwer zapisuje zwycięzcę po probie 100 wizyt na wariant i rozłącznych przedziałach 95%, a panel pokazuje status decyzji.
 - [x] Sekcja proponowanych profili z dziesięcioma rozmytymi zdjęciami właściciela, bez imion, wieku i fałszywych danych.
 - [x] Wiarygodniejsze statystyki: filtrowanie automatycznego i testowego ruchu, deduplikacja, zaangażowanie, kampanie i uczciwe zakresy A/B.

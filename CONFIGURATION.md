@@ -6,6 +6,7 @@
 - Zgoda na pomiar i zdarzenia przeglądarkowe; bez skryptu GA4, cookies, localStorage ani danych profilowych.
 - Pojedynczy test A/B przypisany w pamięci bieżącej wizyty, domyślnie wyłączony.
 - Osobne strony informacji i raportowania; raport nie przedstawia żadnych wymyślonych wyników.
+- `/profil` — osobna strona jednego ukrytego profilu, z odnośnikiem w nagłówku i stopce strony głównej; ten sam ukryty podgląd, bez sekcji proponowanych profili.
 
 ## Wymaga właściciela
 1. `AFFILIATE_URL` jest ustawiony na `https://analise.click/a/5y2vS0pojS41PZ`. Potwierdź u partnera, że adres jest aktualny i że przejście jest poprawnie rozliczane.
