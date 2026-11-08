@@ -16,7 +16,7 @@ import profil08 from '@/assets/suggested/profil-08.webp';
 import profil09 from '@/assets/suggested/profil-09.webp';
 import profil10 from '@/assets/suggested/profil-10.webp';
 
-function HiddenProfile() {
+export function HiddenProfile() {
   const variant = useVariant();
   const [age, setAge] = useState('');
   const ctaAbove = variant.experiment === 'ctaplace' && CTA_PLACEMENT_VARIANTS[variant.index]?.position === 'above';
@@ -52,10 +52,10 @@ function HiddenProfile() {
 }
 const SUGGESTED_PHOTOS = [profil01, profil02, profil03, profil04, profil05, profil06, profil07, profil08, profil09, profil10];
 
-function SuggestedProfiles() {
+export function SuggestedProfiles() {
   return <section className="suggested-section" aria-labelledby="suggested-title">
     <h2 id="suggested-title">Więcej profili czeka na Ciebie</h2>
-    <p className="suggested-intro">Pełne profile i zdjęcia zobaczysz po rejestracji.</p>
+    <p className="suggested-intro">Rejestracja jest szybka — po niej zobaczysz pełne zdjęcia i napiszesz pierwszą wiadomość.</p>
     <div className="suggested-grid">
       {SUGGESTED_PHOTOS.map((photo, i) => <article key={photo} className="suggested-card">
         <div className="suggested-avatar">
@@ -74,7 +74,15 @@ function SuggestedProfiles() {
   </section>;
 }
 
-function Footer() { return <footer><div className="container"><div className="footer-top"><Brand /><span>Nowe znajomości zaczynają się od Ciebie.</span><span className="adult-badge">18+</span></div><div className="footer-links">{Object.entries(site.documents).map(([key, doc]) => <Link key={key} to="/informacje/$document" params={{ document: key }}>{doc.title}<ArrowUpRight size={12} /></Link>)}<Link to="/raportowanie">Konfiguracja i pomiar</Link></div><div className="footer-bottom"><span>© 2026 {site.name}.</span></div></div></footer>; }
+export function SiteHeader() {
+  return <header className="site-header"><div className="container header-inner"><Brand /><div className="header-right"><Link to="/profil" className="header-profile-link">Profil</Link><span className="adult-badge">18+</span><CTA source="header" label="Załóż konto" /></div></div></header>;
+}
+
+export function ProfilePageLabel() {
+  return <div className="profile-page-label"><span>PODGLĄD PROFILU</span><span><LockKeyhole size={12} /> Dostęp prywatny</span></div>;
+}
+
+export function SiteFooter() { return <footer><div className="container"><div className="footer-top"><Brand /><span>Nowe znajomości zaczynają się od Ciebie.</span><span className="adult-badge">18+</span></div><div className="footer-links"><Link to="/profil">Profil</Link>{Object.entries(site.documents).map(([key, doc]) => <Link key={key} to="/informacje/$document" params={{ document: key }}>{doc.title}<ArrowUpRight size={12} /></Link>)}<Link to="/raportowanie">Konfiguracja i pomiar</Link></div><div className="footer-bottom"><span>© 2026 {site.name}.</span></div></div></footer>; }
 
 
-export function Landing() { return <ExperienceProvider><header className="site-header"><div className="container header-inner"><Brand /><div className="header-right"><span className="adult-badge">18+</span><CTA source="header" label="Załóż konto" /></div></div></header><main className="profile-page"><div className="profile-page-label"><span>PODGLĄD PROFILU</span><span><LockKeyhole size={12} /> Dostęp prywatny</span></div><HiddenProfile /><SuggestedProfiles /></main><Footer /></ExperienceProvider>; }
+export function Landing() { return <ExperienceProvider><SiteHeader /><main className="profile-page"><ProfilePageLabel /><HiddenProfile /><SuggestedProfiles /></main><SiteFooter /></ExperienceProvider>; }
