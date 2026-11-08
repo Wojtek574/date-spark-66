@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import { ArrowLeft } from 'lucide-react';
 import { ExperienceProvider } from '@/components/dating/experience';
-import { HiddenProfile, ProfilePageLabel, SiteFooter, SiteHeader } from '@/components/dating/landing';
+import { HiddenProfile, HowItWorks, ProfilePageLabel, SiteFooter, SiteHeader, SuggestedProfiles } from '@/components/dating/landing';
 import { CANONICAL_URL, PROFILE_IMAGE_URL } from '@/config/site';
 
 export const Route = createFileRoute('/profil')({
@@ -22,6 +22,8 @@ function ProfilePage() {
     <main className="profile-page">
       <ProfilePageLabel />
       <HiddenProfile />
+      <SuggestedProfiles />
+      <HowItWorks />
       <Link to="/" className="profile-page-back"><ArrowLeft size={14} aria-hidden="true" /> Wróć na stronę główną</Link>
     </main>
     <SiteFooter />
