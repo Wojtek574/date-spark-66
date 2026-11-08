@@ -207,3 +207,12 @@ footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }
 .suggested-more .main-cta { width: 100%; max-width: 360px; }
 @media (min-width: 768px) { .suggested-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 @media (prefers-reduced-motion: reduce) { .suggested-card { transition: none; } .suggested-card:hover { transform: none; } }
+
+.how-section { width: 100%; max-width: 720px; margin: 2.5rem auto 0; padding: 1.5rem; border-radius: 1.25rem; background: var(--card); border: 1px solid var(--border); text-align: center; }
+.how-section h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+.how-steps { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: .75rem; text-align: left; }
+@media (min-width: 720px) { .how-steps { grid-template-columns: repeat(3, 1fr); } }
+.how-steps li { display: flex; gap: .75rem; align-items: flex-start; padding: .75rem; border-radius: .9rem; background: var(--muted); }
+.how-steps p { margin: .15rem 0 0; font-size: .875rem; color: var(--muted-foreground); }
+.how-num { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center; font-weight: 700; background: var(--primary); color: var(--primary-foreground); }
+.how-trust { display: flex; justify-content: center; align-items: center; gap: .35rem; margin-top: .75rem; font-size: .8rem; color: var(--muted-foreground); }

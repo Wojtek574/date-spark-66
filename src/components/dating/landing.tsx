@@ -85,4 +85,18 @@ export function ProfilePageLabel() {
 export function SiteFooter() { return <footer><div className="container"><div className="footer-top"><Brand /><span>Nowe znajomości zaczynają się od Ciebie.</span><span className="adult-badge">18+</span></div><div className="footer-links"><Link to="/profil">Profil</Link>{Object.entries(site.documents).map(([key, doc]) => <Link key={key} to="/informacje/$document" params={{ document: key }}>{doc.title}<ArrowUpRight size={12} /></Link>)}<Link to="/raportowanie">Konfiguracja i pomiar</Link></div><div className="footer-bottom"><span>© 2026 {site.name}.</span></div></div></footer>; }
 
 
-export function Landing() { return <ExperienceProvider><SiteHeader /><main className="profile-page"><ProfilePageLabel /><HiddenProfile /><SuggestedProfiles /></main><SiteFooter /></ExperienceProvider>; }
+export function HowItWorks() {
+  const steps = [
+    ['Wybierz grupę wieku', 'Jedno kliknięcie, żeby zacząć.'],
+    ['Załóż konto', 'Krótki formularz w serwisie randkowym.'],
+    ['Odblokuj profile', 'Zobacz zdjęcia bez rozmycia i napisz pierwszą wiadomość.'],
+  ];
+  return <section className="how-section" aria-labelledby="how-title">
+    <h2 id="how-title">Jak to działa?</h2>
+    <ol className="how-steps">{steps.map(([t, d], i) => <li key={t}><span className="how-num">{i + 1}</span><div><strong>{t}</strong><p>{d}</p></div></li>)}</ol>
+    <CTA source="how-it-works" label="Przejdź do rejestracji" />
+    <p className="how-trust"><ShieldCheck size={14} aria-hidden="true" /> Tylko dla osób pełnoletnich · Bezpieczne połączenie</p>
+  </section>;
+}
+
+export function Landing() { return <ExperienceProvider><SiteHeader /><main className="profile-page"><ProfilePageLabel /><HiddenProfile /><SuggestedProfiles /><HowItWorks /></main><SiteFooter /></ExperienceProvider>; }
