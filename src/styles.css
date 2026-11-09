@@ -216,3 +216,8 @@ footer { border-top: 1px solid var(--border); padding: 25px 0 85px; }
 .how-steps p { margin: .15rem 0 0; font-size: .875rem; color: var(--muted-foreground); }
 .how-num { flex: none; width: 2rem; height: 2rem; border-radius: 999px; display: grid; place-items: center; font-weight: 700; background: var(--primary); color: var(--primary-foreground); }
 .how-trust { display: flex; justify-content: center; align-items: center; gap: .35rem; margin-top: .75rem; font-size: .8rem; color: var(--muted-foreground); }
+.suggested-avatar { padding: 0; cursor: pointer; display: block; }
+.suggested-unlock { position: absolute; inset: auto 8px 8px 8px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px 6px; border-radius: 6px; background: color-mix(in oklab, var(--card) 88%, transparent); color: var(--primary); font-size: 12px; font-weight: 700; backdrop-filter: blur(4px); }
+.suggested-card .profile-status { margin-bottom: 10px; }
+.suggested-card .secondary-cta { width: 100%; min-height: 36px; font-size: 12px; margin-top: 6px; }
+.suggested-card:hover .suggested-unlock { background: var(--primary); color: var(--primary-foreground); }
