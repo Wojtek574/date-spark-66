@@ -58,13 +58,13 @@ export function SuggestedProfiles() {
     <p className="suggested-intro">Rejestracja jest szybka — po niej zobaczysz pełne zdjęcia i napiszesz pierwszą wiadomość.</p>
     <div className="suggested-grid">
       {SUGGESTED_PHOTOS.map((photo, i) => <article key={photo} className="suggested-card">
-        <div className="suggested-avatar">
+        <button type="button" className="suggested-avatar" aria-label="Odblokuj zdjęcie profilu" onClick={() => (document.querySelector(`[data-cta-source="grid-${i + 1}"]`) as HTMLButtonElement | null)?.click()}>
           <img className="suggested-avatar-photo" src={photo} alt="Rozmyte zdjęcie ukrytego profilu" loading="lazy" />
-          <span className="avatar-lock-badge" aria-hidden="true"><LockKeyhole /></span>
-        </div>
+          <span className="suggested-unlock" aria-hidden="true"><LockKeyhole size={16} /> Odblokuj zdjęcie</span>
+        </button>
         <span className="profile-status"><LockKeyhole size={12} /> Profil ukryty</span>
-        <div className="private-fields" aria-hidden="true"><i /><i /></div>
-        <CTA source={`grid-${i + 1}`} label="Sprawdź profil" />
+        <CTA source={`grid-${i + 1}`} label="Napisz wiadomość" />
+        <CTA source={`grid-${i + 1}-view`} label="Sprawdź profil" secondary />
       </article>)}
     </div>
     <div className="suggested-more">
